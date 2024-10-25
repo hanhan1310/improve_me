@@ -8,6 +8,9 @@ class TextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: TextStyle(
+        fontSize: 12
+      ),
       onTapOutside: (even) {
         FocusScope.of(context).unfocus();
       },
@@ -15,9 +18,7 @@ class TextWidget extends StatelessWidget {
       decoration: InputDecoration(
         fillColor: Colors.white,
         filled: true,
-        labelText: inputString,
-        labelStyle:
-        const TextStyle(fontWeight: FontWeight.w500, color: Colors.black, fontSize: 14),
+        hintText: inputString,
         focusedBorder: OutlineInputBorder(
           borderSide: const BorderSide(color: Colors.black, width: 1.0),
           borderRadius: BorderRadius.circular(15.0),

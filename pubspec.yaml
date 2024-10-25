@@ -40,11 +40,6 @@ dependencies:
   get: ^4.6.6
   dio: ^5.7.0
   loader_overlay: any
-  firebase_auth: ^5.3.0
-  firebase_core: ^3.5.0
-  pretty_dio_logger: ^1.4.0
-  cloud_firestore: any
-  firebase_storage: any
 
 
 dev_dependencies:

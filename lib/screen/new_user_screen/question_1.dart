@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:improve_me/screen/new_user_screen/question_2.dart';
-import 'package:improve_me/widget/button_widget.dart';
+
+
+import '../../config/common_widget/button_widget.dart';
 
 class Question1 extends StatefulWidget {
   const Question1({super.key});

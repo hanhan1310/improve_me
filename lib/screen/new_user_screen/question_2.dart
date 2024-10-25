@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:improve_me/screen/splash_screen.dart';
-import 'package:improve_me/widget/button_widget.dart';
 
+
+import '../../config/common_widget/button_widget.dart';
 import '../home_screen/home_screen_exercises.dart';
 
 class Question2 extends StatefulWidget {

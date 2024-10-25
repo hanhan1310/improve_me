@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:improve_me/screen/new_user_screen/question_1.dart';
-import 'package:improve_me/widget/button_widget.dart';
+
+import '../../config/common_widget/button_widget.dart';
 
 class PersonalGoalScreen extends StatefulWidget {
   const PersonalGoalScreen({super.key});

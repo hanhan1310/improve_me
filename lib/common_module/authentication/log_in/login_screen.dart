@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:improve_me/widget/text_widget.dart';
-
-import '../../widget/images/image.dart';
-import '../new_user_screen/sign_up.dart';
+import '../../../config/common_widget/text_widget.dart';
+import '../../../config/images/image.dart';
+import '../register/sign_up.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -26,13 +24,13 @@ class _LoginScreenState extends State<LoginScreen> {
               image: DecorationImage(image: AssetImage(Images.login)),
             ),
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text("Login to your account", style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black),),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
             width: double.infinity,
           ),
@@ -51,14 +49,14 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "Forgot your password?",
                   style: TextStyle(fontSize: 13),
                 ),
               ),
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           SizedBox(
@@ -66,8 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
             width: 150,
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xffA3EAFF),
-                    side: BorderSide(
+                    backgroundColor: const Color(0xffA3EAFF),
+                    side: const BorderSide(
                       color: Colors.black,
                       width: 1.0,
                     )),
@@ -85,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 "Create new one",
                 style: TextStyle(fontSize: 13, color: Colors.black),
               ),
@@ -94,7 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const Screen1()));
                 },
-                child: Text(
+                child: const Text(
                   "Sign up here",
                   style: TextStyle(fontSize: 13),
                 ),
