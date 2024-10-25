@@ -17,7 +17,7 @@ class _StartWorkoutState extends State<StartWorkout> {
   int countdown = 90;
 
   void counting() {
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdown > 0) {
         setState(() {
           countdown--;
@@ -26,7 +26,7 @@ class _StartWorkoutState extends State<StartWorkout> {
         timer.cancel();
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => Congratuation()),
+            MaterialPageRoute(builder: (context) => const Congratuation()),
             (route) => false);
       }
     });
@@ -41,23 +41,21 @@ class _StartWorkoutState extends State<StartWorkout> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Image.network("https://v2.exercisedb.io/image/8-asN9xlY21elv"),
-            Container(
-              child: Text(
-                countdown == 0 ? "0s" : "${countdown.toString()}s",
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
+            Text(
+              countdown == 0 ? "0s" : "${countdown.toString()}s",
+              style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
             ),
             SizedBox(
               height: 40,
               width: 150,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xffA3EAFF),
+                  backgroundColor: const Color(0xffA3EAFF),
                 ),
                 onPressed: counting,
                 child: Text(
                   countdown == 0 ? "Done" : "Start",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
             ),
@@ -90,10 +88,10 @@ class _CongratuationState extends State<Congratuation> {
               image: AssetImage(Images.congratuation),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 10,
           ),
-          Text(
+          const Text(
             "Congratuation",
             style: TextStyle(
               fontSize: 25,
@@ -102,7 +100,7 @@ class _CongratuationState extends State<Congratuation> {
           ),
         ],
       ),
-      nextScreen: HomeScreenExercises(),
+      nextScreen: const HomeScreenExercises(),
       splashIconSize: 400,
       splashTransition: SplashTransition.fadeTransition,
     );

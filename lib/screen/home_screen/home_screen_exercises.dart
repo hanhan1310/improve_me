@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../config/common_widget/text_widget.dart';
+import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
 import '../../service/api_service/api_service.dart';
 import 'exercise_detail.dart';
@@ -51,13 +52,11 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
         },
         type: BottomNavigationBarType.fixed,
         selectedIconTheme: const IconThemeData(
-          color: Colors.white,
+          color: Colors.blue,
         ),
-        unselectedIconTheme: const IconThemeData(
-          color: Colors.black
-        ),
+        unselectedIconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: const Color(0xffA3EAFF),
-        fixedColor: Colors.white,
+        fixedColor: Colors.blue,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
@@ -77,161 +76,323 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 40,
-              child: TextWidget("Searching..."),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Text(
-              "Exercises",
-              style: TextStyle(
-                fontSize: 15,
-                color: Colors.blueGrey[400],
+      body: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 40,
+                child: TextWidget("Searching..."),
               ),
-            ),
-            const SizedBox(
-              height: 5,
-            ),
-            Expanded(
-              child: ListView(
+              const SizedBox(
+                height: 15,
+              ),
+              Text(
+                "Exercises",
+                style: TextStyle(
+                  fontSize: 15,
+                  color: Colors.blueGrey[400],
+                ),
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          (const ExerciseDetail())));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blueGrey.shade50,
+                            ),
+                            child: const Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [Text("Bench press:"), Text("Chest")],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        Container(
+          color: Colors.blue,
+          child: Text("hello"),
+        ),
+        Container(
+          color: Colors.blue,
+          child: Text("hello"),
+        ),
+        Padding(
+          padding: EdgeInsets.only(top: 20, left: 10, right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                "Profile",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => (ExerciseDetail())));
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 300,
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.blueGrey.shade50,
-                          ),
-                          child: const Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [Text("Bench press:"), Text("Chest")],
-                          ),
-                        ),
-                      ),
-                    ],
+                  Text(
+                    "Weight",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                  ),
+                  CircleAvatar(
+                    backgroundImage: AssetImage(Images.avatar),
+                    minRadius: 60,
+                  ),
+                  Text(
+                    "Height",
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
                   ),
                 ],
               ),
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+              Text("Hoang An", style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
+              SizedBox(
+                height: 35,
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.person,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Editing profile",
+                                  style: TextStyle(color: Colors.blue),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.settings,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Setting",
+                                  style: TextStyle(color: Colors.blue),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.library_books,
+                                  color: Colors.blue,
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Term and Privacy Policy",
+                                  style: TextStyle(color: Colors.blue),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        SizedBox(
+                          height: 50,
+                          width: 300,
+                          child: ElevatedButton(
+                            onPressed: () {},
+                            child: Row(
+                              children: [
+                                Icon(
+                                  Icons.logout,
+
+                                ),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Log out",
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+
+
+            ],
+          ),
         ),
-      ),
+      ][currentTab],
     );
   }
 }
