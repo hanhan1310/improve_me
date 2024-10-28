@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:improve_me/screen/new_user_screen/personal_goal_screen.dart';
-
-
 import '../../../config/common_widget/button_widget.dart';
 import '../../../config/common_widget/text_widget.dart';
+import '../../../screen/main_screen/home_screen_exercises.dart';
 
 class Screen1 extends StatefulWidget {
   const Screen1({super.key});
@@ -112,7 +110,7 @@ class _Screen1State extends State<Screen1> {
             SizedBox(
               height: 50,
               width: 200,
-              child: ButtonWidget("Next", const PersonalGoalScreen()),
+              child: ButtonWidget("Next", const HomeScreenExercises()),
             )
           ],
         ),

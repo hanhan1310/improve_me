@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:improve_me/screen/home_screen/start_workout.dart';
+import 'package:improve_me/screen/main_screen/start_workout_screen.dart';
 
 class ExerciseDetail extends StatefulWidget {
   const ExerciseDetail({super.key});
@@ -34,7 +34,7 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.network("https://v2.exercisedb.io/image/8-asN9xlY21elv"),
+              Image.network("https://v2.exercisedb.io/image/tyKxriZAglPqts"),
               SizedBox(
                 height: 5,
               ),

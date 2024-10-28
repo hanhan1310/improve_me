@@ -40,7 +40,7 @@ dependencies:
   get: ^4.6.6
   dio: ^5.7.0
   loader_overlay: any
-
+  fl_chart: ^0.69.0
 
 dev_dependencies:
   flutter_test:

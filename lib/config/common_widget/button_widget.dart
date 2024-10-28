@@ -1,33 +1,38 @@
 import 'package:flutter/material.dart';
 
-
-class ButtonWidget extends StatelessWidget {
+class ButtonWidget extends StatefulWidget {
   late String inputText;
   late var screen;
+
   ButtonWidget(this.inputText, this.screen);
 
   @override
+  State<ButtonWidget> createState() => _ButtonWidgetState();
+}
+
+class _ButtonWidgetState extends State<ButtonWidget> {
+  @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            backgroundColor: Color(0xffA3EAFF),
-            side: BorderSide(
-              color: Colors.black,
-              width: 1.0,
-            )
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xffA3EAFF),
+          side: BorderSide(
+            color: Colors.black,
+            width: 1.0,
+          )),
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => (widget.screen)),
+            (route) => false);
+      },
+      child: Center(
+        child: Text(
+          widget.inputText,
+          style: TextStyle(
+              fontWeight: FontWeight.w500, fontSize: 17, color: Colors.black),
         ),
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => (screen)));
-        },
-
-        child: Center(
-          child: Text(
-            inputText,
-            style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 17,
-                color: Colors.black),
-          ),
-        ));
+      ),
+    );
   }
 }

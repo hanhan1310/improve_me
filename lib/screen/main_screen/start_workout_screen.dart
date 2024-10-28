@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:improve_me/screen/home_screen/home_screen_exercises.dart';
 
 import '../../config/images/image.dart';
+import 'home_screen_exercises.dart';
 
 class StartWorkout extends StatefulWidget {
   const StartWorkout({super.key});
@@ -40,7 +40,7 @@ class _StartWorkoutState extends State<StartWorkout> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Image.network("https://v2.exercisedb.io/image/8-asN9xlY21elv"),
+            Image.network("https://v2.exercisedb.io/image/tyKxriZAglPqts"),
             Text(
               countdown == 0 ? "0s" : "${countdown.toString()}s",
               style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
