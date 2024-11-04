@@ -1,20 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:improve_me/controller/exercise_controller/chest_exercise_controller.dart';
 import 'package:improve_me/screen/main_screen/start_workout_screen.dart';
 
 class ExerciseDetail extends StatefulWidget {
-  const ExerciseDetail({super.key});
+  int getData;
+  ExerciseDetail({super.key, required this.getData});
 
   @override
   State<ExerciseDetail> createState() => _ExerciseDetailState();
 }
 
 class _ExerciseDetailState extends State<ExerciseDetail> {
+  late ChestExercisesController _exerciseController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _exerciseController = Get.put(ChestExercisesController());
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Bench press",
+        title: Text(
+          "${_exerciseController.nameDetail(widget.getData)}",
           style: TextStyle(
               fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
         ),
@@ -34,19 +45,15 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.network("https://v2.exercisedb.io/image/tyKxriZAglPqts"),
+              Image.network("${_exerciseController.imageExercise(widget.getData)}"),
               SizedBox(
                 height: 5,
               ),
-              Text("Target: Pectorals"),
+              Text("Target: ${_exerciseController.targetMuscle(widget.getData)}"),
               SizedBox(
                 height: 5,
               ),
               Text("Secondary muscles: Triceps, Shoudlers"),
-              SizedBox(
-                height: 5,
-              ),
-              Text("Reps/Sets: 8 reps / 3 sets"),
               SizedBox(
                 height: 5,
               ),

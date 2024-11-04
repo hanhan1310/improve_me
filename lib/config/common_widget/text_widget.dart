@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class TextWidget extends StatelessWidget {
   final String inputString;
-
   TextWidget(this.inputString);
 
   @override

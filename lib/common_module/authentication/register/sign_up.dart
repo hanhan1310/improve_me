@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:improve_me/controller/sign_up_controller/sign_up_controller.dart';
 import '../../../config/common_widget/button_widget.dart';
 import '../../../config/common_widget/text_widget.dart';
 import '../../../screen/main_screen/home_screen_exercises.dart';
@@ -11,10 +12,23 @@ class Screen1 extends StatefulWidget {
 }
 
 class _Screen1State extends State<Screen1> {
+  late TextEditingController userController;
+  late TextEditingController passwordController;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    userController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    userController.dispose();
+    passwordController.dispose();
+    super.dispose();
+
   }
   @override
   Widget build(BuildContext context) {
@@ -38,7 +52,29 @@ class _Screen1State extends State<Screen1> {
             SizedBox(
               height: 45,
               width: 270,
-              child: TextWidget("Username"),
+              child: TextFormField(
+                controller: userController,
+                style: TextStyle(
+                    fontSize: 12
+                ),
+                onTapOutside: (even) {
+                  FocusScope.of(context).unfocus();
+                },
+                autofocus: false,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Username",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffA3EAFF), width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -47,7 +83,29 @@ class _Screen1State extends State<Screen1> {
             SizedBox(
               height: 45,
               width: 270,
-              child: TextWidget("Password"),
+              child: TextFormField(
+                controller: passwordController,
+                style: TextStyle(
+                    fontSize: 12
+                ),
+                onTapOutside: (even) {
+                  FocusScope.of(context).unfocus();
+                },
+                autofocus: false,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Password",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffA3EAFF), width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
             ),
             const SizedBox(
               height: 20,
@@ -110,7 +168,29 @@ class _Screen1State extends State<Screen1> {
             SizedBox(
               height: 50,
               width: 200,
-              child: ButtonWidget("Next", const HomeScreenExercises()),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xffA3EAFF),
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 1.0,
+                    )),
+                onPressed: () {
+                  SignUpController signUpController = SignUpController();
+                  signUpController.createUserByEmailAndPassword(email: userController.text, password: passwordController.text );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => (HomeScreenExercises())),
+                          (route) => false);
+                },
+                child: Center(
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500, fontSize: 17, color: Colors.black),
+                  ),
+                ),
+              ),
             )
           ],
         ),

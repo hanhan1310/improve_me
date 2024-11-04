@@ -12,11 +12,11 @@ class ChestExercisesController extends GetxController {
 
   @override
   void onInit() {
-    fetchRecipes();
+    fetchExercise();
     super.onInit();
   }
 
-  void fetchRecipes() async {
+  void fetchExercise() async {
     try {
       isLoading(true);
       final response = await http.get(
@@ -29,7 +29,7 @@ class ChestExercisesController extends GetxController {
 
       if (response.statusCode == 200) {
         List jsonResponse = json.decode(response.body);
-        chestExercise.value = jsonResponse.map((recipe) => ChestExercisesModel.fromJson(recipe)).toList();
+        chestExercise.value = jsonResponse.map((context) => ChestExercisesModel.fromJson(context)).toList();
       } else {
         Get.snackbar('Error', 'Failed to load recipes');
       }
@@ -39,7 +39,66 @@ class ChestExercisesController extends GetxController {
   }
 
   List<String?> nameExercises () {
-    List<String?> nameExercises = chestExercise?.map((e) => e.name).toList() ?? [];
+    List<String?> nameExercises = chestExercise.map((e) => e.name!.capitalizeFirst).toList();
     return nameExercises;
+  }
+
+
+
+  String? nameDetail (int index) {
+    String? name;
+    List<String?> nameDetail = chestExercise.map((e) => e.name).toList();
+
+    for(int i = 0; i < nameDetail.length; i++){
+      if(i == index) {
+        name = nameDetail[i];
+      }
+    }
+    return name!.capitalizeFirst;
+  }
+
+  String? targetMuscle (int index) {
+    String? target;
+    List<String?> targetMuscles = chestExercise.map((e) => e.target).toList();
+
+    for(int i = 0; i < targetMuscles.length; i++){
+      if(i == index) {
+        target = targetMuscles[i];
+      }
+    }
+    return target!.capitalizeFirst;
+  }
+  String? secondaryMuscles (int index) {
+    String? indexId;
+    List<String?> idExercises = chestExercise.map((e) => e.id).toList();
+
+    for(int i = 0; i < idExercises.length; i++){
+      if(i == index) {
+        indexId = idExercises[i];
+      }
+    }
+    return indexId;
+  }
+  String? imageExercise (int index) {
+    String? image;
+    List<String?> iamgeExercises = chestExercise.map((e) => e.gifUrl).toList();
+
+    for(int i = 0; i < iamgeExercises.length; i++){
+      if(i == index) {
+        image = iamgeExercises[i];
+      }
+    }
+    return image;
+  }
+  String? instructionExercise (int index) {
+    String? indexId;
+    List<String?> idExercises = chestExercise.map((e) => e.id).toList();
+
+    for(int i = 0; i < idExercises.length; i++){
+      if(i == index) {
+        indexId = idExercises[i];
+      }
+    }
+    return indexId;
   }
 }

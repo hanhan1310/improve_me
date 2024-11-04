@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/controller/food_controller/food_controller.dart';
 
 import '../../config/common_widget/text_widget.dart';
 import '../../config/images/image.dart';
@@ -17,6 +18,7 @@ class HomeScreenExercises extends StatefulWidget {
 
 class _HomeScreenExercisesState extends State<HomeScreenExercises> {
   late ChestExercisesController exerciseController;
+  late FoodController foodController;
   int currentTab = 0;
 
   @override
@@ -24,6 +26,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
     // TODO: implement initState
     super.initState();
     exerciseController = Get.put(ChestExercisesController());
+    foodController = Get.put(FoodController());
   }
 
   @override
@@ -78,260 +81,138 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
         ],
       ),
       body: <Widget>[
-        Obx(() {
-          return Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 40,
-                  child: TextWidget("Searching..."),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Row(
-                  children: [
-                    Text(
-                      "Exercises",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.blueGrey[400],
-                      ),
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                    // DropdownButton(items: items, onChanged: onChanged)
-                  ],
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: exerciseController.nameExercises().length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: 300,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            (const ExerciseDetail())));
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.blueGrey.shade50,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                        "${exerciseController.nameExercises()[index].toString()}"),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    },
+        Obx(
+          () {
+            return Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: TextWidget("Searching..."),
                   ),
-                ),
-              ],
-            ),
-          );
-        }),
-        Padding(
-          padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: Column(
-            children: [
-              SizedBox(
-                height: 40,
-                child: TextWidget("Searching..."),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Expanded(
-                child: GridView.count(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 20,
-                  crossAxisSpacing: 15,
-                  children: [
-                    Stack(
-                      children: [
-                        Container(
-                          height: 300,
-                          width: 300,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(10), // <-- Radius
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        "Exercises",
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: Colors.blueGrey[400],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      // DropdownButton(items: items, onChanged: onChanged)
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: exerciseController.nameExercises().length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 300,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => (ExerciseDetail(getData: index,))));
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: Colors.blueGrey.shade50,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Flexible(
+                                      child: Text(
+                                          "${exerciseController.nameExercises()[index].toString()}"),
+                                    ),
+                                  ],
+                                ),
                               ),
-                              padding: EdgeInsets.zero,
                             ),
-                            onPressed: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          (NutritionDetailScreen())));
-                            },
-                            child: Image.network(
-                              "https://cdn0.recetasgratis.net/es/posts/9/7/9/albondigas_de_carne_molida_45979_600.jpg",
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Ground beef meatballs",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
+                          ],
+                        );
+                      },
                     ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage(Images.fishSalad),
-                            ),
-                          ),
-                        ),
-                        Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "Fish Salad",
-                              style: TextStyle(
-                                  fontSize: 13, fontWeight: FontWeight.w500),
-                            )),
-                      ],
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
+        ),
+        Obx(
+          () {
+            return Padding(
+              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: TextWidget("Searching..."),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Expanded(
+                    child: GridView.builder(
+                      itemCount: foodController.getImage().length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 10,
+                          crossAxisSpacing: 10),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Stack(
+                          children: [
+                            Container(
+                              height: 300,
+                              width: 300,
+                              child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          10), // <-- Radius
+                                    ),
+                                    padding: EdgeInsets.zero,
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                (NutritionDetailScreen())));
+                                  },
+                                  child: Image.network(
+                                      "${foodController.getImage()[index]}"),),
+                            ),
+                            Align(
+                                alignment: Alignment.bottomCenter,
+                                child: Flexible(
+                                  child: Text(
+                                    "${foodController.getName()[index]}",
+                                    style: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                )),
+                          ],
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
         ),
         Padding(
           padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
