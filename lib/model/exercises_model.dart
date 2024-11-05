@@ -1,4 +1,4 @@
-class ChestExercisesModel {
+class ExercisesModel {
   String? bodyPart;
   String? equipment;
   String? gifUrl;
@@ -8,7 +8,7 @@ class ChestExercisesModel {
   List<String>? secondaryMuscles;
   List<String>? instructions;
 
-  ChestExercisesModel(
+  ExercisesModel(
       {this.bodyPart,
         this.equipment,
         this.gifUrl,
@@ -18,7 +18,7 @@ class ChestExercisesModel {
         this.secondaryMuscles,
         this.instructions});
 
-  ChestExercisesModel.fromJson(Map<String, dynamic> json) {
+  ExercisesModel.fromJson(Map<String, dynamic> json) {
     bodyPart = json['bodyPart'];
     equipment = json['equipment'];
     gifUrl = json['gifUrl'];

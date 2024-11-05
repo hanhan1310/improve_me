@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:improve_me/model/chest_exercises_model.dart';
+import 'package:improve_me/model/exercises_model.dart';
 
 class ChestExercisesController extends GetxController {
-  var chestExercise = <ChestExercisesModel>[].obs;
+  var exercise = <ExercisesModel>[].obs;
   var isLoading = true.obs;
 
   static const String _baseUrl = 'https://exercisedb.p.rapidapi.com/exercises/name/chest?offset=0&limit=20';
@@ -29,7 +29,7 @@ class ChestExercisesController extends GetxController {
 
       if (response.statusCode == 200) {
         List jsonResponse = json.decode(response.body);
-        chestExercise.value = jsonResponse.map((context) => ChestExercisesModel.fromJson(context)).toList();
+        exercise.value = jsonResponse.map((context) => ExercisesModel.fromJson(context)).toList();
       } else {
         Get.snackbar('Error', 'Failed to load recipes');
       }
@@ -39,7 +39,7 @@ class ChestExercisesController extends GetxController {
   }
 
   List<String?> nameExercises () {
-    List<String?> nameExercises = chestExercise.map((e) => e.name!.capitalizeFirst).toList();
+    List<String?> nameExercises = exercise.map((e) => e.name!.capitalizeFirst).toList();
     return nameExercises;
   }
 
@@ -47,7 +47,7 @@ class ChestExercisesController extends GetxController {
 
   String? nameDetail (int index) {
     String? name;
-    List<String?> nameDetail = chestExercise.map((e) => e.name).toList();
+    List<String?> nameDetail = exercise.map((e) => e.name).toList();
 
     for(int i = 0; i < nameDetail.length; i++){
       if(i == index) {
@@ -59,7 +59,7 @@ class ChestExercisesController extends GetxController {
 
   String? targetMuscle (int index) {
     String? target;
-    List<String?> targetMuscles = chestExercise.map((e) => e.target).toList();
+    List<String?> targetMuscles = exercise.map((e) => e.target).toList();
 
     for(int i = 0; i < targetMuscles.length; i++){
       if(i == index) {
@@ -70,7 +70,7 @@ class ChestExercisesController extends GetxController {
   }
   String? secondaryMuscles (int index) {
     String? indexId;
-    List<String?> idExercises = chestExercise.map((e) => e.id).toList();
+    List<String?> idExercises = exercise.map((e) => e.id).toList();
 
     for(int i = 0; i < idExercises.length; i++){
       if(i == index) {
@@ -81,7 +81,7 @@ class ChestExercisesController extends GetxController {
   }
   String? imageExercise (int index) {
     String? image;
-    List<String?> iamgeExercises = chestExercise.map((e) => e.gifUrl).toList();
+    List<String?> iamgeExercises = exercise.map((e) => e.gifUrl).toList();
 
     for(int i = 0; i < iamgeExercises.length; i++){
       if(i == index) {
@@ -92,7 +92,7 @@ class ChestExercisesController extends GetxController {
   }
   String? instructionExercise (int index) {
     String? indexId;
-    List<String?> idExercises = chestExercise.map((e) => e.id).toList();
+    List<String?> idExercises = exercise.map((e) => e.id).toList();
 
     for(int i = 0; i < idExercises.length; i++){
       if(i == index) {

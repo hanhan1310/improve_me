@@ -4,8 +4,10 @@ import 'package:improve_me/controller/food_controller/food_controller.dart';
 
 import '../../config/common_widget/text_widget.dart';
 import '../../config/images/image.dart';
-import '../../controller/exercise_controller/chest_exercise_controller.dart';
+import '../../controller/exercise_controller/exercise_controller.dart';
+import '../../controller/food_controller/detail_food_controller.dart';
 import 'chart_screen.dart';
+import 'detail_food_screen.dart';
 import 'exercise_detail_screen.dart';
 import 'nutrition_detail_screen.dart';
 
@@ -83,135 +85,155 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
       body: <Widget>[
         Obx(
           () {
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 40,
-                    child: TextWidget("Searching..."),
-                  ),
-                  const SizedBox(
-                    height: 15,
-                  ),
-                  Row(
-                    children: [
-                      Text(
-                        "Exercises",
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.blueGrey[400],
-                        ),
-                      ),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      // DropdownButton(items: items, onChanged: onChanged)
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: exerciseController.nameExercises().length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: 300,
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context) => (ExerciseDetail(getData: index,))));
-                                },
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor: Colors.blueGrey.shade50,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Flexible(
-                                      child: Text(
-                                          "${exerciseController.nameExercises()[index].toString()}"),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      },
+            if (exerciseController.isLoading == true) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            } else {
+              return Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      child: TextWidget("Searching..."),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-        Obx(
-          () {
-            return Padding(
-              padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 40,
-                    child: TextWidget("Searching..."),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Expanded(
-                    child: GridView.builder(
-                      itemCount: foodController.getImage().length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10),
-                      itemBuilder: (BuildContext context, int index) {
-                        return Stack(
-                          children: [
-                            Container(
-                              height: 300,
-                              width: 300,
-                              child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // <-- Radius
-                                    ),
-                                    padding: EdgeInsets.zero,
-                                  ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Exercises",
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.blueGrey[400],
+                          ),
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        // DropdownButton(items: items, onChanged: onChanged)
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Expanded(
+                      child: ListView.builder(
+                        itemCount: exerciseController.nameExercises().length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(
+                                width: 300,
+                                child: ElevatedButton(
                                   onPressed: () {
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                (NutritionDetailScreen())));
+                                                (ExerciseDetail(
+                                                  getData: index,
+                                                ))));
                                   },
-                                  child: Image.network(
-                                      "${foodController.getImage()[index]}"),),
-                            ),
-                            Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Flexible(
-                                  child: Text(
-                                    "${foodController.getName()[index]}",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.w500),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.blueGrey.shade50,
                                   ),
-                                )),
-                          ],
-                        );
-                      },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Flexible(
+                                        child: Text(
+                                            "${exerciseController.nameExercises()[index].toString()}"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
+                  ],
+                ),
+              );
+            }
+          },
+        ),
+        Obx(
+          () {
+            // Check if data is still loading
+            if (foodController.isLoading.value) {
+              return Center(child: CircularProgressIndicator());
+            }
+
+            // Check if data is loaded but empty
+            if (foodController.foodList.isEmpty) {
+              return Center(child: Text("No data available"));
+            } else {
+              return Padding(
+                padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 40,
+                      child: TextWidget("Searching..."),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Expanded(
+                      child: GridView.builder(
+                        itemCount: foodController.getImage().length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10),
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            height: 300,
+                            width: 300,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.circular(10), // <-- Radius
+                                ),
+                                padding: EdgeInsets.zero,
+                              ),
+                              onPressed: () {
+                                String foodId =
+                                    foodController.foodList[index].id!;
+                                DetailFoodController detailController =
+                                    Get.put(DetailFoodController());
+                                detailController.fetchFoodDetail(
+                                    foodId); // Fetch details for selected food
+
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        DetailFoodScreen(foodId: foodId),
+                                  ),
+                                );
+                              },
+                              child: Image.network(
+                                "${foodController.getImage()[index].toString()}",
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
           },
         ),
         Padding(
