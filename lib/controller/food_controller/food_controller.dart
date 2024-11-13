@@ -46,4 +46,5 @@ class FoodController extends GetxController {
       isLoading(false);
     }
   }
+  String? nameFoodDetail(int index) => foodList[index].recipe?.capitalizeFirst;
 }

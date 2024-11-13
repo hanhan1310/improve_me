@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../controller/food_controller/detail_food_controller.dart';
+
+import '../../controller/food_controller/food_controller.dart';
 import '../../model/food_model.dart';
 
 class DetailFoodScreen extends StatefulWidget {
@@ -12,14 +13,14 @@ class DetailFoodScreen extends StatefulWidget {
 }
 
 class _DetailFoodScreenState extends State<DetailFoodScreen> {
-  late DetailFoodController detailFoodController;
+  late FoodController detailFoodController;
   int foodId = Get.arguments;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    detailFoodController = Get.put(DetailFoodController());
+    detailFoodController = Get.put(FoodController());
   }
 
   @override
@@ -46,13 +47,13 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
           return const Center(
             child: CircularProgressIndicator(),
           );
-        } else if (detailFoodController.foodDetail.value == null) {
+        } else if (detailFoodController.foodList.value == null) {
           print(foodId);
-          print(detailFoodController.fetchFoodDetail());
 
           return Center(child: Text("No details found."));
         } else {
-          final food = detailFoodController.foodDetail.value!;
+          print("toi day roi");
+
           return Padding(
             padding: const EdgeInsets.all(20.0),
             child: SingleChildScrollView(
@@ -61,7 +62,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "${food}", style: const TextStyle(fontWeight: FontWeight.bold),),
+                    detailFoodController.nameFoodDetail(foodId).toString(), style: const TextStyle(fontWeight: FontWeight.bold),),
                   const SizedBox(
                     height: 10,
                   ),
@@ -71,7 +72,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
                         height: 300,
                         width: 300,
                         child: Image.network(
-                          "${food}",
+                          "${detailFoodController.foodList[foodId].image?.trim()}",
                           fit: BoxFit.fill,
                         ),
                       )),
@@ -79,25 +80,25 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
                     height: 5,
                   ),
                   Text(
-                      "Serving: ${food}"),
+                      "Serving: ${detailFoodController.foodList[foodId].serving}"),
                   const SizedBox(
                     height: 5,
                   ),
                   Text(
-                      "Duration: ${food}"),
+                      "Duration: ${detailFoodController.foodList[foodId].cookTimeInMinutes}"),
                   const SizedBox(
-                    height: 5,
+                    height: 10,
                   ),
-                  // const Text("Ingredientes: "),
-                  // SizedBox(height: 10),
-                  // ..._getIngredientsList(),
-                  //
-                  // const SizedBox(
-                  //   height: 5,
-                  // ),
-                  // const Text("Rescipe: "),
-                  // SizedBox(height: 10),
-                  // ..._getDirectionsList(),
+                  const Text("Ingredientes: "),
+                  SizedBox(height: 5),
+                  ..._getIngredientsList(detailFoodController.foodList[foodId]),
+
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text("Rescipe: "),
+                  SizedBox(height: 5),
+                  ..._getDirectionsList(detailFoodController.foodList[foodId]),
                 ],
               ),
             ),
@@ -113,7 +114,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
       food.ingredient6, food.ingredient7, food.ingredient8, food.ingredient9, food.ingredient10
     ]
         .where((ingredient) => ingredient != null && ingredient.isNotEmpty) // Filter non-null and non-empty ingredients
-        .map((ingredient) => Text("• $ingredient", style: TextStyle(fontSize: 16)))
+        .map((ingredient) => Text("- $ingredient"))
         .toList();
   }
 
@@ -124,7 +125,7 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
       food.directionsStep6, food.directionsStep7, food.directionsStep8, food.directionsStep9, food.directionsStep10
     ]
         .where((step) => step != null && step.isNotEmpty) // Filter non-null and non-empty steps
-        .map((step) => Text("• $step", style: TextStyle(fontSize: 16)))
+        .map((step) => Text("- $step"))
         .toList();
   }
 }

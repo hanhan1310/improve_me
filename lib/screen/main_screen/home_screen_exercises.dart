@@ -7,7 +7,6 @@ import 'package:improve_me/screen/main_screen/setting_screen.dart';
 import '../../common_module/authentication/log_in/login_screen.dart';
 import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
-import '../../controller/food_controller/detail_food_controller.dart';
 import 'chart_screen.dart';
 import 'detail_food_screen.dart';
 import 'exercise_detail_screen.dart';
@@ -340,7 +339,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                     onPressed: () {
                                       int foodId = foodController.foodList[index].id!;
 
-                                      Get.to(() => DetailFoodScreen(), arguments: foodController.foodList[index].id);
+                                      Get.to(() => DetailFoodScreen(), arguments: index);
                                     },
                                     child: Column(
                                       mainAxisAlignment:
