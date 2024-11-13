@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../config/common_widget/text_widget.dart';
 import '../../../config/images/image.dart';
+import '../../../controller/sign_up_controller/sign_up_controller.dart';
+import '../../../screen/main_screen/home_screen_exercises.dart';
 import '../register/sign_up.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -11,6 +13,25 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  late TextEditingController userController;
+  late TextEditingController passwordController;
+
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    userController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    userController.dispose();
+    passwordController.dispose();
+    super.dispose();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -69,7 +90,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       color: Colors.black,
                       width: 1.0,
                     )),
-                onPressed: () {},
+                onPressed: () {
+                  SignUpController signInController = SignUpController();
+                  signInController.signInWithEmailAndPassword(email: userController.text, password: passwordController.text );
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => (HomeScreenExercises())),
+                          (route) => false);
+                },
                 child: const Center(
                   child: Text(
                     "Sign in",

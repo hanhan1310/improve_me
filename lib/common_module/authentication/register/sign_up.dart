@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:improve_me/controller/sign_up_controller/sign_up_controller.dart';
-import '../../../config/common_widget/button_widget.dart';
-import '../../../config/common_widget/text_widget.dart';
 import '../../../screen/main_screen/home_screen_exercises.dart';
 
 class Screen1 extends StatefulWidget {
@@ -114,55 +112,32 @@ class _Screen1State extends State<Screen1> {
             SizedBox(
               height: 45,
               width: 270,
-              child: TextWidget("Name"),
-            ),
-            const SizedBox(
-              height: 20,
-              width: double.infinity,
-            ),
-            SizedBox(
-              width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 125,
-                    height: 45,
-                    child: TextWidget("Age"),
+              child: TextFormField(
+                controller: passwordController,
+                style: TextStyle(
+                    fontSize: 12
+                ),
+                onTapOutside: (even) {
+                  FocusScope.of(context).unfocus();
+                },
+                autofocus: false,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Confirm Password",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                  SizedBox(
-                    width: 125,
-                    height: 45,
-                    child: TextWidget("Gender"),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffA3EAFF), width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
                   ),
-                ],
+                ),
               ),
             ),
             const SizedBox(
               height: 20,
-              width: double.infinity,
-            ),
-            SizedBox(
-              width: 270,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: 125,
-                    height: 45,
-                    child: TextWidget("Height"),
-                  ),
-
-                  SizedBox(
-                    width: 125,
-                    height: 45,
-                    child: TextWidget("Weight"),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 80,
               width: double.infinity,
             ),
             SizedBox(
@@ -185,7 +160,7 @@ class _Screen1State extends State<Screen1> {
                 },
                 child: Center(
                   child: Text(
-                    "Next",
+                    "Sign Up",
                     style: TextStyle(
                         fontWeight: FontWeight.w500, fontSize: 17, color: Colors.black),
                   ),

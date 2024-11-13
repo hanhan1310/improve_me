@@ -2,20 +2,30 @@ import 'dart:async';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../../config/images/image.dart';
+import '../../controller/exercise_controller/exercise_controller.dart';
 import 'home_screen_exercises.dart';
 
-class StartWorkout extends StatefulWidget {
-  const StartWorkout({super.key});
+class StartWorkoutScreen extends StatefulWidget {
+  int getData;
+  StartWorkoutScreen({super.key, required this.getData});
 
   @override
-  State<StartWorkout> createState() => _StartWorkoutState();
+  State<StartWorkoutScreen> createState() => _StartWorkoutState();
 }
 
-class _StartWorkoutState extends State<StartWorkout> {
-  int countdown = 90;
+class _StartWorkoutState extends State<StartWorkoutScreen> {
+  int countdown = 3;
+  late ExercisesController _startExerciseController;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _startExerciseController = Get.put(ExercisesController());
+  }
   void counting() {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdown > 0) {
@@ -40,7 +50,7 @@ class _StartWorkoutState extends State<StartWorkout> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Image.network("https://v2.exercisedb.io/image/tyKxriZAglPqts"),
+            Image.network(_startExerciseController.imageExercise(widget.getData).toString()),
             Text(
               countdown == 0 ? "0s" : "${countdown.toString()}s",
               style: const TextStyle(fontSize: 35, fontWeight: FontWeight.bold),

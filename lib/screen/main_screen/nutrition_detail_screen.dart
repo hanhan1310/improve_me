@@ -37,40 +37,38 @@ class _NutritionDetailScreenState extends State<NutritionDetailScreen> {
               Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Image.network("https://cdn0.recetasgratis.net/es/posts/9/7/9/albondigas_de_carne_molida_45979_600.jpg", fit: BoxFit.fill,)),
-              SizedBox(
+              const SizedBox(
                 height: 5,
               ),
-              Text("Serving: Plate for 2 people"),
-              SizedBox(height: 5,),
-              Text("Duration: 30 minutes"),
-              SizedBox(height: 5,),
-              Row(
+              const Text("Serving: Plate for 2 people"),
+              const SizedBox(height: 5,),
+              const Text("Duration: 30 minutes"),
+              const SizedBox(height: 5,),
+              const Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text("Ingredientes: "),
                   SizedBox(
                     width: 10,
                   ),
-                  Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("500 grams of ground beef"),
-                        Text("2 eggs"),
-                        Text("1 onion"),
-                        Text("3 tablespoons breadcrumbs"),
-                        Text("Flour"),
-                        Text("1 pinch of oregano"),
-                        Text("1 pinch of garlic powder"),
-                        Text("1 tablespoon fresh parsley"),
-                        Text("salt (to taste)"),
-                      ],
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text("500 grams of ground beef"),
+                      Text("2 eggs"),
+                      Text("1 onion"),
+                      Text("3 tablespoons breadcrumbs"),
+                      Text("Flour"),
+                      Text("1 pinch of oregano"),
+                      Text("1 pinch of garlic powder"),
+                      Text("1 tablespoon fresh parsley"),
+                      Text("salt (to taste)"),
+                    ],
                   ),
                 ],
               ),
-              SizedBox(height: 5,),
-              Flexible(
+              const SizedBox(height: 5,),
+              const Flexible(
                   child: Text(
                       "Instructions: To make these homemade meatballs you can use "
                           "beef or ask for a mix of beef and pork at the butcher shop. "

@@ -3,30 +3,30 @@ import 'package:get/get.dart';
 import 'package:improve_me/controller/exercise_controller/exercise_controller.dart';
 import 'package:improve_me/screen/main_screen/start_workout_screen.dart';
 
-class ExerciseDetail extends StatefulWidget {
+class ExerciseDetailScreen extends StatefulWidget {
   int getData;
 
-  ExerciseDetail({super.key, required this.getData});
+  ExerciseDetailScreen({super.key, required this.getData});
 
   @override
-  State<ExerciseDetail> createState() => _ExerciseDetailState();
+  State<ExerciseDetailScreen> createState() => _ExerciseDetailState();
 }
 
-class _ExerciseDetailState extends State<ExerciseDetail> {
-  late ChestExercisesController _exerciseController;
+class _ExerciseDetailState extends State<ExerciseDetailScreen> {
+  late ExercisesController _exerciseController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _exerciseController = Get.put(ChestExercisesController());
+    _exerciseController = Get.put(ExercisesController());
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Exercise Detail",
           style: TextStyle(
               fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
@@ -42,47 +42,100 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
       ),
       body: Obx(
         () {
-          if (_exerciseController.isLoading == true) {
-            return Center(
+          if (_exerciseController.isLoading.value) {
+            return const Center(
               child: CircularProgressIndicator(),
             );
           } else {
-            return Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      "${_exerciseController.nameDetail(widget.getData)}",
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            return SingleChildScrollView(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+                children: [
+
+                  /// exercise name
+                  Text(
+                    "${_exerciseController.nameDetail(widget.getData)}",
+                    style:
+                        const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+
+                  /// exercise image
+                  Image.network(
+                      "${_exerciseController.imageExercise(widget.getData)}"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  /// target muscle
+                  Text(
+                      "Target Muscle: ${_exerciseController.targetMuscle(widget.getData)}"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  /// secondary muscles
+                  const Text("Secondary muscles:"),
+                  SizedBox(
+                    height: 40,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _exerciseController
+                          .secondaryMuscles(widget.getData)
+                          .length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "- ${_exerciseController.secondaryMuscles(widget.getData)[index]}",
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    SizedBox(
-                      height: 10,
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  /// equipment
+                  Text(
+                      "Equipment: ${_exerciseController.equipment(widget.getData)}"),
+                  const SizedBox(
+                    height: 5,
+                  ),
+
+                  ///instructions
+                  const Text(
+                    "Instructions: ",
+
+                  ),
+                  SizedBox(
+                    height: 250,
+                    child: ListView.builder(
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: _exerciseController
+                          .instructionExercise(widget.getData)
+                          .length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+
+                            Text(
+                              "- ${_exerciseController.instructionExercise(widget.getData)[index]}",
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                    Image.network(
-                        "${_exerciseController.imageExercise(widget.getData)}"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text(
-                        "Target: ${_exerciseController.targetMuscle(widget.getData)}"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text("Secondary muscles: Triceps, Shoudlers"),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Flexible(
-                        child: Text(
-                            "Instructions: Lie flat on a bench with your feet flat on the ground and your back pressed against the bench, Grasp the band h"
-                            "andles with an overhand grip, slightly wider than shoulder-width apart, Extend your arms fully, pushing the bands away from your chest, "
-                            "Slowly lower the bands back down to your chest, keeping your elbows at a 90 degree angle, Repeat for the desired number of repetitions."))
-                  ],
-                ),
+                  ),
+                ],
               ),
             );
           }
@@ -90,14 +143,18 @@ class _ExerciseDetailState extends State<ExerciseDetail> {
       ),
       floatingActionButton: ElevatedButton(
         onPressed: () {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => (StartWorkout())));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => (StartWorkoutScreen(
+                        getData: widget.getData,
+                      ))));
         },
-        child: Text(
+        style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffA3EAFF)),
+        child: const Text(
           "Start workout",
           style: TextStyle(color: Colors.black),
         ),
-        style: ElevatedButton.styleFrom(backgroundColor: Color(0xffA3EAFF)),
       ),
     );
   }

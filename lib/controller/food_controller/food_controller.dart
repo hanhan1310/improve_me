@@ -1,61 +1,49 @@
 import 'dart:convert';
-import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 import 'package:improve_me/model/food_model.dart';
 
 class FoodController extends GetxController {
+  var isLoading = false.obs;
+  var errorMessage = ''.obs;
   var foodList = <FoodModel>[].obs;
-  var isLoading = true.obs;
-
-  static const String _baseUrl = 'https://the-vegan-recipes-db.p.rapidapi.com/';
-  static const String _apiKey = '44f58e748cmsh5fd7504f4c089f0p1479fdjsnbd20fe5a98c5';
 
   @override
   void onInit() {
-    fetchFood();
     super.onInit();
+    fetchFoodList();
   }
 
-  void fetchFood() async {
+  static const String _baseUrl = 'https://keto-diet.p.rapidapi.com/';
+  static const String _apiKey = '44f58e748cmsh5fd7504f4c089f0p1479fdjsnbd20fe5a98c5';
+
+
+  Future<void> fetchFoodList({String? query}) async {
     try {
       isLoading(true);
+      final url = query != null && query.isNotEmpty
+          ? Uri.parse("$_baseUrl?search=$query")
+          : Uri.parse("$_baseUrl");
       final response = await http.get(
-        Uri.parse(_baseUrl),
+        url,
         headers: {
           'X-RapidAPI-Key': _apiKey,
-          'X-RapidAPI-Host': 'the-vegan-recipes-db.p.rapidapi.com',
+          'X-RapidAPI-Host': 'keto-diet.p.rapidapi.com',
         },
       );
 
-      if (response.statusCode == 200) {
-        final jsonResponse = json.decode(response.body);
 
-        // Check if jsonResponse is a list of food items
-        if (jsonResponse is List) {
-          // Map each JSON item to a FoodModel instance
-          foodList.value = jsonResponse
-              .map((item) => FoodModel.fromJson(item as Map<String, dynamic>))
-              .toList();
-        } else {
-          print("Unexpected response format: $jsonResponse");
-        }
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+        foodList.value = data.map((item) => FoodModel.fromJson(item)).toList();
+        print("Thành công lấy data food");
       } else {
-        print("API error: ${response.statusCode} - ${response.body}");
+        print('Lỗi tải danh sách món ăn');
       }
-    } catch (e) {
-      print("Error fetching food data: $e");
+    } catch (e, stackTrace) {
+      print("StackTrace: $stackTrace");
     } finally {
       isLoading(false);
     }
-  }
-
-  // Extracts image URLs from the food list
-  List<String?> getImage() {
-    return foodList.map((foodItem) => foodItem.image).toList();
-  }
-
-  // Extracts titles from the food list
-  List<String?> getName() {
-    return foodList.map((foodItem) => foodItem.title).toList();
   }
 }
