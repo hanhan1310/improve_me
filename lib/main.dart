@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         textTheme: TextTheme(),
       ),
-      // home: const SplashScreen(),
-      home: const HomeScreenExercises(),
+      home: const SplashScreen(),
+      // home: const HomeScreenExercises(),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../config/common_widget/text_widget.dart';
 import '../../../config/images/image.dart';
 import '../../../controller/sign_up_controller/sign_up_controller.dart';
 import '../../../screen/main_screen/home_screen_exercises.dart';
@@ -57,14 +56,59 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(
               height: 50,
-              child: TextWidget("Username")),
-          const SizedBox(
+              child: TextFormField(
+                controller: userController,
+                style: const TextStyle(
+                    fontSize: 12
+                ),
+                onTapOutside: (even) {
+                  FocusScope.of(context).unfocus();
+                },
+                autofocus: false,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Username",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffA3EAFF), width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),
+          ),
+              const SizedBox(
             height: 20,
             width: double.infinity,
           ),
           SizedBox(
               height: 50,
-              child: TextWidget("Password")),
+              child: TextFormField(
+                controller: passwordController,
+                style: const TextStyle(
+                    fontSize: 12
+                ),
+                onTapOutside: (even) {
+                  FocusScope.of(context).unfocus();
+                },
+                autofocus: false,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  hintText: "Password",
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  border: OutlineInputBorder(
+                    borderSide: const BorderSide(color: Color(0xffA3EAFF), width: 1.0),
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                ),
+              ),),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -95,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   signInController.signInWithEmailAndPassword(email: userController.text, password: passwordController.text );
                   Navigator.pushAndRemoveUntil(
                       context,
-                      MaterialPageRoute(builder: (context) => (HomeScreenExercises())),
+                      MaterialPageRoute(builder: (context) => (const HomeScreenExercises())),
                           (route) => false);
                 },
                 child: const Center(

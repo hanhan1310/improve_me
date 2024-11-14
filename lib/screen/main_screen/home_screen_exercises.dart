@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:improve_me/controller/food_controller/food_controller.dart';
-import 'package:improve_me/screen/main_screen/profile_screen.dart';
-import 'package:improve_me/screen/main_screen/setting_screen.dart';
-
+import 'package:improve_me/screen/detail_screen/profile_screen.dart';
 import '../../common_module/authentication/log_in/login_screen.dart';
 import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
+import '../detail_screen/detail_food_screen.dart';
+import '../detail_screen/setting_screen.dart';
 import 'chart_screen.dart';
-import 'detail_food_screen.dart';
-import 'exercise_detail_screen.dart';
+import '../detail_screen/exercise_detail_screen.dart';
 import 'dart:async';
 
 class HomeScreenExercises extends StatefulWidget {
@@ -267,7 +266,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
 
             // Check if data is loaded but empty
             if (foodController.foodList.isEmpty) {
-              print(foodController.foodList);
               return const Center(child: Text("No data available"));
             } else {
               return Padding(
@@ -337,9 +335,8 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                       padding: EdgeInsets.zero,
                                     ),
                                     onPressed: () {
-                                      int foodId = foodController.foodList[index].id!;
 
-                                      Get.to(() => DetailFoodScreen(), arguments: index);
+                                      Get.to(() => const DetailFoodScreen(), arguments: index);
                                     },
                                     child: Column(
                                       mainAxisAlignment:
@@ -359,7 +356,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                           ),
                                         ),
 
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 3,
                                         ),
 
@@ -371,7 +368,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                               foodController
                                                   .foodList[index].recipe
                                                   .toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.black),
                                             ))),
