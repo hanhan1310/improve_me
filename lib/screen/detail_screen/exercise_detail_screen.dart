@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:improve_me/controller/exercise_controller/exercise_controller.dart';
-import 'package:improve_me/screen/main_screen/start_workout_screen.dart';
+import 'package:improve_me/controller/sign_up_controller/sign_up_controller.dart';
+import 'package:improve_me/model/authentication_model.dart';
+import 'package:improve_me/screen/detail_screen/start_workout_screen.dart';
+import 'package:improve_me/utils/authentication_service.dart';
+import 'package:improve_me/utils/firebase_storage.dart';
 
 class ExerciseDetailScreen extends StatefulWidget {
   int getData;
@@ -14,6 +18,10 @@ class ExerciseDetailScreen extends StatefulWidget {
 
 class _ExerciseDetailState extends State<ExerciseDetailScreen> {
   late ExercisesController _exerciseController;
+  final FirestoreService firestoreService = FirestoreService();
+  final SignUpController signUpController = Get.put(SignUpController());
+
+
 
   @override
   void initState() {
@@ -26,8 +34,8 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Exercise Detail",
+        title: Text(
+          "exerciseDetail".tr,
           style: TextStyle(
               fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
         ),
@@ -72,14 +80,20 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
                   ),
 
                   /// target muscle
-                  Text(
-                      "Target Muscle: ${_exerciseController.targetMuscle(widget.getData)}"),
+                  Row(
+                    children: [
+                      Text(
+                          "targetMuscle".tr),
+                      SizedBox(width: 5,),
+                      Text("${_exerciseController.targetMuscle(widget.getData)}"),
+                    ],
+                  ),
                   const SizedBox(
                     height: 5,
                   ),
 
                   /// secondary muscles
-                  const Text("Secondary muscles:"),
+                  Text("secondaryMuscles".tr),
                   SizedBox(
                     height: 40,
                     child: ListView.builder(
@@ -104,15 +118,21 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
                   ),
 
                   /// equipment
-                  Text(
-                      "Equipment: ${_exerciseController.equipment(widget.getData)}"),
+                  Row(
+                    children: [
+                      Text(
+                          "equipment".tr),
+                      SizedBox(width: 5,),
+                      Text("${_exerciseController.equipment(widget.getData)}"),
+                    ],
+                  ),
                   const SizedBox(
                     height: 5,
                   ),
 
                   ///instructions
-                  const Text(
-                    "Instructions: ",
+                  Text(
+                    "instructions".tr,
 
                   ),
                   SizedBox(
@@ -141,8 +161,11 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
           }
         },
       ),
+
+      /// button start
       floatingActionButton: ElevatedButton(
         onPressed: () {
+          firestoreService.addExercises(id: _exerciseController.exercises[widget.getData].id ?? "",name: _exerciseController.nameDetail(widget.getData) ?? "",bodyPart:  _exerciseController.targetMuscle(widget.getData) ?? "",idUser: signUpController.currentUser?.uid ?? "");
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -151,8 +174,8 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
                       ))));
         },
         style: ElevatedButton.styleFrom(backgroundColor: const Color(0xffA3EAFF)),
-        child: const Text(
-          "Start workout",
+        child: Text(
+          "startWorkout".tr,
           style: TextStyle(color: Colors.black),
         ),
       ),

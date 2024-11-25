@@ -27,8 +27,8 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-            "Food Detail",
+        title: Text(
+            "foodDetail".tr,
             style: TextStyle(
                 fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
           ),
@@ -79,24 +79,37 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                      "Serving: ${detailFoodController.foodList[foodId].serving}"),
+                  Row(
+                    children: [
+                      Text(
+                          "serving".tr),SizedBox(width: 5,),
+                      Text("${detailFoodController.foodList[foodId].serving}"),
+                    ],
+                  ),
                   const SizedBox(
                     height: 5,
                   ),
-                  Text(
-                      "Duration: ${detailFoodController.foodList[foodId].cookTimeInMinutes}"),
+                  Row(
+                    children: [
+                      Text(
+                          "duration".tr ),
+                      SizedBox(width: 5,),
+                      Text("${detailFoodController.foodList[foodId].prepTimeInMinutes}"),
+                      SizedBox(width: 5,),
+                      Text("minutes".tr),
+                    ],
+                  ),
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text("Ingredientes: "),
+                  Text("ingredients".tr),
                   SizedBox(height: 5),
                   ..._getIngredientsList(detailFoodController.foodList[foodId]),
 
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text("Rescipe: "),
+                  Text("recipe".tr),
                   SizedBox(height: 5),
                   ..._getDirectionsList(detailFoodController.foodList[foodId]),
                 ],

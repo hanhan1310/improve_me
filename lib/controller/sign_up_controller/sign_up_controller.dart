@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpController {
+  User? get currentUser => FirebaseAuth.instance.currentUser;
+
   /// sign up
   Future<void> createUserByEmailAndPassword({required String email, required String password}) async {
     bool result = false;
@@ -9,8 +12,9 @@ class SignUpController {
         email: email,
         password: password,
       );
-      print("login oke");
+
       result = true;
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('The password provided is too weak.');
@@ -44,4 +48,6 @@ class SignUpController {
       return false;
     }
   }
+
+
 }

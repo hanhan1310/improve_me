@@ -7,7 +7,7 @@ import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
 import '../detail_screen/detail_food_screen.dart';
 import '../detail_screen/setting_screen.dart';
-import 'chart_screen.dart';
+import '../detail_screen/chart_screen.dart';
 import '../detail_screen/exercise_detail_screen.dart';
 import 'dart:async';
 
@@ -35,10 +35,12 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
     foodController = Get.put(FoodController());
     searching;
     searchingFood;
+    print("this is initstate home screen");
   }
 
+
   /// timer for searching exercises
-  void _onSearchChanged() {
+  void _onSearchExerciseChanged() {
     final query = searching.text;
 
     // Cancel the previous debounce timer if any
@@ -64,7 +66,8 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
     // Set a new debounce timer
     _debounce = Timer(const Duration(milliseconds: 500), () {
       if (query.isEmpty) {
-        foodController.fetchFoodList(); // Show all exercises when search is cleared
+        foodController
+            .fetchFoodList(); // Show all exercises when search is cleared
       } else {
         foodController.fetchFoodList(query: query); // Perform search
       }
@@ -89,7 +92,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
           ),
         ),
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentTab,
         onTap: (int newIndex) {
@@ -104,34 +106,32 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
         unselectedIconTheme: const IconThemeData(color: Colors.black),
         backgroundColor: const Color(0xffA3EAFF),
         fixedColor: Colors.blue,
-        items: const [
-
+        items: [
           /// home
           BottomNavigationBarItem(
             icon: Icon(Icons.home_filled),
-            label: "Home",
+            label: "home".tr,
           ),
 
           /// nutrition
           BottomNavigationBarItem(
             icon: Icon(Icons.fastfood),
-            label: "Nutrition",
+            label: "nutrition".tr,
           ),
 
           /// statistic
           BottomNavigationBarItem(
             icon: Icon(Icons.show_chart),
-            label: "Statistic",
+            label: "statistic".tr,
           ),
 
           /// setting
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
-            label: "Setting",
+            label: "setting".tr,
           ),
         ],
       ),
-
       body: <Widget>[
         /// Home screen
         Obx(
@@ -146,7 +146,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     /// searching
                     SizedBox(
                       height: 40,
@@ -156,12 +155,12 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                         onTapOutside: (even) {
                           FocusScope.of(context).unfocus();
                         },
-                        onChanged: (text) => _onSearchChanged(),
+                        onChanged: (text) => _onSearchExerciseChanged(),
                         autofocus: false,
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
-                          hintText: "Searching...",
+                          hintText: "searching".tr,
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 1.0),
@@ -218,7 +217,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-
                                         /// exercises image
                                         SizedBox(
                                             height: 200,
@@ -272,7 +270,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                 padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
                 child: Column(
                   children: [
-
                     /// searching
                     SizedBox(
                       height: 40,
@@ -287,7 +284,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                         decoration: InputDecoration(
                           fillColor: Colors.white,
                           filled: true,
-                          hintText: "Searching...",
+                          hintText: "searching".tr,
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 1.0),
@@ -335,8 +332,8 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                       padding: EdgeInsets.zero,
                                     ),
                                     onPressed: () {
-
-                                      Get.to(() => const DetailFoodScreen(), arguments: index);
+                                      Get.to(() => const DetailFoodScreen(),
+                                          arguments: index);
                                     },
                                     child: Column(
                                       mainAxisAlignment:
@@ -344,7 +341,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
                                       children: [
-
                                         /// food image
                                         SizedBox(
                                           height: 120,
@@ -387,72 +383,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
         ),
 
         /// statistic screen
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
-          child: SizedBox(
-            height: double.maxFinite,
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 200,
-                  width: 300,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      const ChartScreen(),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            height: 40,
-                            width: 80,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                                const Text("Chest"),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            height: 40,
-                            width: 80,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: 15,
-                                  width: 15,
-                                  decoration: BoxDecoration(
-                                      color: Colors.green,
-                                      borderRadius: BorderRadius.circular(5)),
-                                ),
-                                const Text("Shoulder"),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                const Text("This is your statistic"),
-              ],
-            ),
-          ),
-        ),
+        ChartScreen(),
 
         /// setting screen
         Padding(
@@ -460,8 +391,8 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Text(
-                "Profile",
+              Text(
+                "profile".tr,
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
               ),
               const SizedBox(
@@ -471,35 +402,22 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  /// weight
-                  const Text(
-                    "Weight",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
-
                   /// avatar
                   CircleAvatar(
                     backgroundImage: AssetImage(Images.avatar),
                     minRadius: 60,
                   ),
+                  /// name
+                  const Text("Hoang An",
+                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
 
-                  ///height
-                  const Text(
-                    "Height",
-                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                  ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
 
-              /// name
-              const Text("Hoang An",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
               const SizedBox(
                 height: 35,
               ),
+
               Expanded(
                 child: ListView(
                   children: [
@@ -518,7 +436,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                 ),
                               );
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Icon(
                                   Icons.person,
@@ -528,7 +446,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                   width: 15,
                                 ),
                                 Text(
-                                  "Editing profile",
+                                  "editingProfile".tr,
                                   style: TextStyle(color: Colors.black),
                                 )
                               ],
@@ -552,7 +470,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                 ),
                               );
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Icon(
                                   Icons.settings,
@@ -562,7 +480,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                   width: 15,
                                 ),
                                 Text(
-                                  "Setting",
+                                  "setting".tr,
                                   style: TextStyle(color: Colors.black),
                                 )
                               ],
@@ -586,7 +504,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                           (const LoginScreen())),
                                   (route) => false);
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Icon(
                                   Icons.logout,
@@ -596,7 +514,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                                   width: 15,
                                 ),
                                 Text(
-                                  "Log out",
+                                  "logout".tr,
                                   style: TextStyle(color: Colors.black),
                                 )
                               ],

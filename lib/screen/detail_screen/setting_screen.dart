@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:improve_me/config/theme/theme.dart';
+import 'package:improve_me/controller/language_controller/language_controller.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({super.key});
@@ -8,24 +11,33 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
+  final LanguageController _languageController = Get.put(LanguageController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _languageController;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Improve Me",
-            style: TextStyle(
-                fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color(0xffA3EAFF),
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30),
-              bottomRight: Radius.circular(30),
-            ),
+      appBar: AppBar(
+        title: const Text(
+          "Improve Me",
+          style: TextStyle(
+              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+        ),
+        centerTitle: true,
+        backgroundColor: const Color(0xffA3EAFF),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
           ),
         ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -34,15 +46,17 @@ class _SettingScreenState extends State<SettingScreen> {
               width: 300,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {},
-                child: const Row(
+                onPressed: () {
+                  Get.changeTheme(
+                    Get.isDarkMode ? ThemeApp.light : ThemeApp.dark);
+                },
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Theme",
-                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      "theme".tr,
+                      style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
-
                   ],
                 ),
               ),
@@ -54,15 +68,42 @@ class _SettingScreenState extends State<SettingScreen> {
               width: 300,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {},
-                child: const Text(
-                  "Languages",
-                  style: TextStyle(fontSize: 20, color: Colors.black),
+                onPressed: () {
+                  Get.dialog(AlertDialog(
+                    title: Center(child: Text("selectLanguage".tr)),
+                    content: Container(
+                      width: double.infinity,
+                      height: 80,
+                      child: ListView.separated(
+                        itemCount: _languageController.changeLanguage.length,
+                        itemBuilder: (context, index) {
+                          final currentLanguageValue =
+                              _languageController.changeLanguage[index]['name'];
+                          final currentLocalValue = _languageController
+                              .changeLanguage[index]['local'];
+                          return Center(
+                            child: InkWell(
+                              child: Text(currentLanguageValue.toString().toLowerCase().tr, style: TextStyle(fontSize: 16),),
+                              onTap: () {
+                                Get.back();
+                                Get.updateLocale(currentLocalValue);
+                              },
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Divider();
+                        },
+                      ),
+                    ),
+                  ));
+                },
+                child: Text(
+                  "language".tr,
+                  style: TextStyle(fontSize: 15, color: Colors.black),
                 ),
               ),
             ),
-
-
           ],
         ),
       ),

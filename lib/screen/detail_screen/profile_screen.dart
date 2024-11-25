@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -12,8 +12,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          "Profile",
+        title: Text(
+          "profile".tr,
           style: TextStyle(
               fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
         ),
@@ -35,11 +35,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Name",
+                      "name".tr,
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Text("Hoang An",
@@ -54,11 +54,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Age",
+                      "Email",
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Text("20",
@@ -73,11 +73,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Height",
+                      "password".tr,
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Text("170",
@@ -92,11 +92,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
               height: 40,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Weight",
+                      "privacyQuestion".tr,
                       style: TextStyle(fontSize: 15, color: Colors.black),
                     ),
                     Text("65",
@@ -107,24 +107,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             const SizedBox(height: 20,),
 
-            ///username and password
-            SizedBox(
-              width: 300,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Username and Password",
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-
-                  ],
-                ),
-              ),
-            ),
 
           ],
         ),

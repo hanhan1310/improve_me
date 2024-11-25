@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
-import 'home_screen_exercises.dart';
+import '../main_screen/home_screen_exercises.dart';
 
 class StartWorkoutScreen extends StatefulWidget {
   int getData;
@@ -64,7 +64,7 @@ class _StartWorkoutState extends State<StartWorkoutScreen> {
                 ),
                 onPressed: counting,
                 child: Text(
-                  countdown == 0 ? "Done" : "Start",
+                  countdown == 0 ? "done".tr : "start".tr,
                   style: const TextStyle(fontSize: 20, color: Colors.black),
                 ),
               ),
