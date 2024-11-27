@@ -74,13 +74,12 @@ class ExercisesController extends GetxController {
           exerciseCounts[bodyPart] = 1;
         }
       }
-
       exerciseCounts.refresh();
     });
   }
 
   /// lấy data từ api
-  void fetchExercises({String? query, int offset = 0, int limit = 30}) async {
+  Future<void> fetchExercises({String? query, int offset = 0, int limit = 30}) async {
     try {
       isLoading(true);
       final url = query != null && query.isNotEmpty
@@ -99,6 +98,8 @@ class ExercisesController extends GetxController {
         List jsonResponse = json.decode(response.body);
         exercises.value = jsonResponse.map((data) => ExercisesModel.fromJson(data)).toList();
       } else {
+        print("Failed to fetch exercises. Status code: ${response.statusCode}");
+        print("Response Body: ${response.body}");
         Get.snackbar('Error', 'Failed to load exercises');
       }
     } catch (e) {

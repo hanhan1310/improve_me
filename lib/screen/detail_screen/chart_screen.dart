@@ -21,6 +21,7 @@ class _ChartScreenState extends State<ChartScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   late TextEditingController _selectingDateController;
   final RxList<String> exerciseNames = <String>[].obs;
+  final RxString exerciseDetail = "".obs;
 
   @override
   void initState() {
@@ -33,14 +34,13 @@ class _ChartScreenState extends State<ChartScreen> {
     _fetchExercises();
   }
 
+
   Future<void> _fetchExercises() async {
     final userId = _signUpController.currentUser?.uid;
-    print("Fetching exercises for userId: $userId");
     if (userId != null && userId.isNotEmpty) {
       _firestoreService.getExercises(userId).listen((exercises) {
         exerciseNames.value =
-            exercises.map((exercise) => exercise.name ?? "Unknown").toList();
-        print("Fetched exercises: ${exerciseNames.value}");
+            exercises.map((exercise) => exercise.name ?? "Unknown").toSet().toList();
       });
     } else {
       print("User ID not available");
@@ -112,7 +112,7 @@ class _ChartScreenState extends State<ChartScreen> {
                                 return PieChartSectionData(
                                   value: value,
                                   color: getColor(entry.key),
-                                  title: entry.key,
+                                  title: entry.key.capitalizeFirst,
                                   titleStyle: TextStyle(
                                     fontSize: 12,
                                     color: Colors.white,
@@ -183,10 +183,17 @@ class _ChartScreenState extends State<ChartScreen> {
                     return const Text("No exercises available");
                   }
                   return ListView.builder(
+                    key: Key(exerciseNames.toString()),
                     itemCount: exerciseNames.length,
                     itemBuilder: (context, index) {
                       return ElevatedButton(
-                          onPressed: () {}, child: Text(exerciseNames[index]));
+                          onPressed: () async {
+                            exerciseDetail.value = exerciseNames[index];
+                            await _exercisesController.fetchExercises(query: exerciseDetail.value.toLowerCase());
+                            print(exerciseDetail.value);
+                            Get.to(() => ExerciseDetailScreen(getData: 0));
+
+                          }, child: Text(exerciseNames[index]));
                     },
                   );
                 }),
