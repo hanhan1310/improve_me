@@ -41,6 +41,19 @@ class ExercisesController extends GetxController {
     }
   }
 
+  List<String> get bodyParts => exerciseCounts.keys.toList();
+
+  int getCount(String bodyPart) => exerciseCounts[bodyPart] ?? 0;
+
+  List<Map<String, dynamic>> get pieChartData {
+    return exerciseCounts.entries
+        .map((entry) => {
+      'bodyPart': entry.key,
+      'count': entry.value,
+    })
+        .toList();
+  }
+
   static const String _baseUrl = 'https://exercisedb.p.rapidapi.com/exercises';
   static const String _nameSearchUrl = 'https://exercisedb.p.rapidapi.com/exercises/name/';
   static const String _apiKey = '44f58e748cmsh5fd7504f4c089f0p1479fdjsnbd20fe5a98c5';

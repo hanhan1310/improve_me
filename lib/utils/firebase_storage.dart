@@ -23,11 +23,13 @@ class FirestoreService {
         .where('id user', isEqualTo: userId)
         .snapshots()
         .map((snapshot) {
-      final exercises = snapshot.docs.map((doc) {
+      if (snapshot.docs.isEmpty) {
+        print("No exercises found for user $userId");
+      }
+      return snapshot.docs.map((doc) {
+        print("Document: ${doc.data()}");
         return FirebaseStorageModel.fromDocument(doc);
       }).toList();
-      return exercises;
     });
   }
-
 }
