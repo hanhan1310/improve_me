@@ -36,11 +36,10 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
       appBar: AppBar(
         title: Text(
           "exerciseDetail".tr,
-          style: TextStyle(
-              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xffA3EAFF),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30),
@@ -66,7 +65,7 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
                   Text(
                     "${_exerciseController.nameDetail(widget.getData)}",
                     style:
-                        const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+                    Theme.of(context).textTheme.bodyMedium,
                   ),
                   const SizedBox(
                     height: 10,

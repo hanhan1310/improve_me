@@ -28,7 +28,6 @@ class MyApp extends StatelessWidget {
       locale: const Locale("en", "US"),
       theme: ThemeApp.light,
       darkTheme: ThemeApp.dark,
-      // themeMode: ThemeMode.dark,
       home: const SplashScreen(),
       // home: const HomeScreenExercises(),
     );

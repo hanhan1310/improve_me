@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/config/common_widget/text_widget/headline_widget.dart';
+import 'package:improve_me/utils/authentication_service.dart';
+
+import '../../controller/sign_up_controller/sign_up_controller.dart';
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
@@ -8,17 +12,38 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final AuthenticationService authenticationService = AuthenticationService();
+  final SignUpController _signUpController = Get.put(SignUpController());
+  final RxString dataName = "".obs;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    authenticationService;
+    _signUpController;
+    _fetchExercises;
+  }
+
+  Future<void> _fetchExercises() async {
+    final userId = _signUpController.currentUser?.uid;
+    if (userId != null && userId.isNotEmpty) {
+      authenticationService.getUserIdData(userId).listen((userData) {
+        dataName.value = userData.toString();
+      });
+    } else {
+      print("User ID not available");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "profile".tr,
-          style: TextStyle(
-              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
-        ),
+        title: HeadlineWidget(data: "profile"),
         centerTitle: true,
-        backgroundColor: const Color(0xffA3EAFF),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30),
@@ -30,23 +55,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         child: Column(
           children: [
-            SizedBox(
-              width: 300,
-              height: 40,
-              child: ElevatedButton(
-                onPressed: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "name".tr,
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                    Text("Hoang An",
-                        style: TextStyle(fontSize: 15, color: Colors.black)),
-                  ],
+            Obx(() {
+              return SizedBox(
+                width: 300,
+                height: 40,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "name".tr,
+                        style: TextStyle(fontSize: 15, color: Colors.black),
+                      ),
+                      Text("$dataName",
+                          style: TextStyle(fontSize: 15, color: Colors.black)),
+                    ],
+                  ),
                 ),
-              ),
+              );
+            }
             ),
             const SizedBox(height: 20,),
             SizedBox(

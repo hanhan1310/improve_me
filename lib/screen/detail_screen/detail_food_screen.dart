@@ -29,12 +29,11 @@ class _DetailFoodScreenState extends State<DetailFoodScreen> {
       appBar: AppBar(
         title: Text(
             "foodDetail".tr,
-            style: TextStyle(
-                fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+            style: Theme.of(context).textTheme.headlineMedium,
           ),
 
         centerTitle: true,
-        backgroundColor: const Color(0xffA3EAFF),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30),

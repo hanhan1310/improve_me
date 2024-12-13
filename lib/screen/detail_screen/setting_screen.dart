@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/config/common_widget/text_widget/title_text_widget.dart';
 import 'package:improve_me/config/theme/theme.dart';
 import 'package:improve_me/controller/language_controller/language_controller.dart';
 
@@ -24,13 +25,12 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Improve Me",
-          style: TextStyle(
-              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xffA3EAFF),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30),
@@ -48,16 +48,16 @@ class _SettingScreenState extends State<SettingScreen> {
               child: ElevatedButton(
                 onPressed: () {
                   Get.changeTheme(
-                    Get.isDarkMode ? ThemeApp.light : ThemeApp.dark);
+                      Get.isDarkMode ? ThemeApp.light : ThemeApp.dark);
                 },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "theme".tr,
-                      style: TextStyle(fontSize: 15, color: Colors.black),
-                    ),
-                  ],
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                    textStyle:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                child: Center(
+                  child: TitleTextWidget(data: "theme"),
                 ),
               ),
             ),
@@ -83,7 +83,13 @@ class _SettingScreenState extends State<SettingScreen> {
                               .changeLanguage[index]['local'];
                           return Center(
                             child: InkWell(
-                              child: Text(currentLanguageValue.toString().toLowerCase().tr, style: TextStyle(fontSize: 16),),
+                              child: Text(
+                                currentLanguageValue
+                                    .toString()
+                                    .toLowerCase()
+                                    .tr,
+                                style: TextStyle(fontSize: 16),
+                              ),
                               onTap: () {
                                 Get.back();
                                 Get.updateLocale(currentLocalValue);

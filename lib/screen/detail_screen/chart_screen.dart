@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/config/common_widget/text_widget/body_medium_text_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/body_small_text_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/title_text_widget.dart';
 import 'package:improve_me/controller/exercise_controller/exercise_controller.dart';
 import 'package:improve_me/controller/sign_up_controller/sign_up_controller.dart';
 import 'package:improve_me/utils/firebase_storage.dart';
@@ -34,13 +37,14 @@ class _ChartScreenState extends State<ChartScreen> {
     _fetchExercises();
   }
 
-
   Future<void> _fetchExercises() async {
     final userId = _signUpController.currentUser?.uid;
     if (userId != null && userId.isNotEmpty) {
       _firestoreService.getExercises(userId).listen((exercises) {
-        exerciseNames.value =
-            exercises.map((exercise) => exercise.name ?? "Unknown").toSet().toList();
+        exerciseNames.value = exercises
+            .map((exercise) => exercise.name ?? "Unknown")
+            .toSet()
+            .toList();
       });
     } else {
       print("User ID not available");
@@ -110,15 +114,14 @@ class _ChartScreenState extends State<ChartScreen> {
                               sections: exerciseCounts.entries.map((entry) {
                                 final value = entry.value.toDouble();
                                 return PieChartSectionData(
-                                  value: value,
-                                  color: getColor(entry.key),
-                                  title: entry.key.capitalizeFirst,
-                                  titleStyle: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                  )
-                                );
+                                    value: value,
+                                    color: getColor(entry.key),
+                                    title: entry.key.capitalizeFirst,
+                                    titleStyle: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ));
                               }).toList(),
                             ),
                           ),
@@ -152,10 +155,11 @@ class _ChartScreenState extends State<ChartScreen> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(exerciseCounts.keys
-                                                .toList()[index]
-                                                .capitalizeFirst ??
-                                            ""),
+                                        TitleTextWidget(
+                                            data: exerciseCounts.keys
+                                                    .toList()[index]
+                                                    .capitalizeFirst ??
+                                                ""),
                                       ],
                                     ),
                                   ),
@@ -172,7 +176,8 @@ class _ChartScreenState extends State<ChartScreen> {
               SizedBox(
                 height: 20,
               ),
-              Text("thisIsStatistic".tr),
+              BodyMediumTextWidget(data: "thisIsStatistic"),
+              // Text("thisIsStatistic".tr, style: Theme.of(context).textTheme.bodyMedium,),
               SizedBox(
                 height: 10,
               ),
@@ -180,7 +185,7 @@ class _ChartScreenState extends State<ChartScreen> {
                 height: 160,
                 child: Obx(() {
                   if (exerciseNames.isEmpty) {
-                    return const Text("No exercises available");
+                    return TitleTextWidget(data: "noExercise");
                   }
                   return ListView.builder(
                     key: Key(exerciseNames.toString()),
@@ -189,11 +194,12 @@ class _ChartScreenState extends State<ChartScreen> {
                       return ElevatedButton(
                           onPressed: () async {
                             exerciseDetail.value = exerciseNames[index];
-                            await _exercisesController.fetchExercises(query: exerciseDetail.value.toLowerCase());
+                            await _exercisesController.fetchExercises(
+                                query: exerciseDetail.value.toLowerCase());
                             print(exerciseDetail.value);
                             Get.to(() => ExerciseDetailScreen(getData: 0));
-
-                          }, child: Text(exerciseNames[index]));
+                          },
+                          child: TitleTextWidget(data: exerciseNames[index]));
                     },
                   );
                 }),

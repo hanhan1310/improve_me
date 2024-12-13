@@ -78,13 +78,12 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
+        title: Text(
           "Improve Me",
-          style: TextStyle(
-              fontSize: 28, fontWeight: FontWeight.w500, color: Colors.black),
+          style: Theme.of(context).textTheme.headlineMedium,
         ),
         centerTitle: true,
-        backgroundColor: const Color(0xffA3EAFF),
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(30),

@@ -189,7 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     onPressed: () {},
                     child: Text(
                       "forgotPassword".tr,
-                      style: TextStyle(fontSize: 13),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],
@@ -240,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                     child: Text(
                       "signUp".tr,
-                      style: TextStyle(fontSize: 13),
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
                   ),
                 ],

@@ -5,10 +5,11 @@ class LocalString extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
     "en_US" : {
+      "noExercise": "You haven't work-out yet!",
       "loginToYourAccount": "Login to your account",
       "password": "Password",
       "forgotPassword": "Forgot your password?",
-      "createAccount": "Create new one",
+      "createAccount": "Create new one ?",
       "signIn": "Sign in",
       "signUp": "Sign up here",
       "searching": "Searching...",
@@ -48,10 +49,11 @@ class LocalString extends Translations {
 
     },
     "vi_VI" : {
+      "noExercise": "Bạn chưa tập luyện!",
       "loginToYourAccount": "Đăng nhập",
       "password": "Mật khẩu",
       "forgotPassword": "Quên mật khẩu?",
-      "createAccount": "Tạo tài khoản mới",
+      "createAccount": "Tạo tài khoản mới ?",
       "signIn": "Đăng nhập",
       "signUp": "Đăng kí ở đây",
       "searching": "Tìm kiếm...",

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:improve_me/model/authentication_model.dart';
 
 class AuthenticationService {
   final CollectionReference usersCollection  = FirebaseFirestore.instance.collection("users");
@@ -13,11 +14,20 @@ class AuthenticationService {
     });
   }
 
-  Future<Map<String, dynamic>> getUserData(String userId) async {
-    final snapshot = await usersCollection.where("id user", isEqualTo: userId).get();
-    if (snapshot.docs.isNotEmpty) {
-      return snapshot.docs.first.data() as Map<String, dynamic>;
-    }
-    throw Exception("User not found");
+  Stream<List<AuthenticationModel>> getUserIdData(String userId) {
+    return usersCollection
+        .where('id user', isEqualTo: userId)
+        .snapshots()
+        .map((snapshot) {
+      if (snapshot.docs.isEmpty) {
+        print("No exercises found for user $userId");
+      }
+      return snapshot.docs.map((doc) {
+        print("Document: ${doc.data()}");
+        return AuthenticationModel.fromDocument(doc);
+      }).toList();
+    });
   }
+
+
 }
