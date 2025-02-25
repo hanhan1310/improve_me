@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/config/common_widget/button_widget/button_widget.dart';
 import 'package:improve_me/config/common_widget/text_widget/body_medium_text_widget.dart';
 import 'package:improve_me/config/common_widget/text_widget/body_small_text_widget.dart';
-import 'package:improve_me/config/common_widget/text_widget/title_text_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/title_small_widget.dart';
 import 'package:improve_me/controller/exercise_controller/exercise_controller.dart';
 import 'package:improve_me/controller/sign_up_controller/sign_up_controller.dart';
 import 'package:improve_me/utils/firebase_storage.dart';
 
+import '../../config/common_widget/text_widget/title_large_widget.dart';
 import 'exercise_detail_screen.dart';
 
 class ChartScreen extends StatefulWidget {
@@ -77,24 +79,25 @@ class _ChartScreenState extends State<ChartScreen> {
           padding: const EdgeInsets.only(top: 20, left: 20, right: 20),
           child: Column(
             children: [
-              TextFormField(
-                controller: _selectingDateController,
-                readOnly: true,
-                decoration: InputDecoration(
-                    labelText: "date".tr,
-                    prefixIcon: Icon(Icons.calendar_today),
-                    enabledBorder:
-                        OutlineInputBorder(borderSide: BorderSide.none),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Color(0xffA3EAFF)),
-                    )),
-                onTap: _selectDate,
-              ),
+
+              // TextFormField(
+              //   controller: _selectingDateController,
+              //   readOnly: true,
+              //   decoration: InputDecoration(
+              //       labelText: "date".tr,
+              //       prefixIcon: Icon(Icons.calendar_today),
+              //       enabledBorder:
+              //           OutlineInputBorder(borderSide: BorderSide.none),
+              //       focusedBorder: OutlineInputBorder(
+              //         borderSide: BorderSide(color: Color(0xffA3EAFF)),
+              //       )),
+              //   onTap: _selectDate,
+              // ),
               SizedBox(
                 height: 5,
               ),
               SizedBox(
-                height: 200,
+                height: 250,
                 width: double.infinity,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -129,7 +132,7 @@ class _ChartScreenState extends State<ChartScreen> {
 
                         /// exercise bodypart name
                         SizedBox(
-                          height: 200,
+                          height: 230,
                           width: 100,
                           child: ListView.builder(
                             itemCount: exerciseCounts.entries.length,
@@ -155,7 +158,7 @@ class _ChartScreenState extends State<ChartScreen> {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        TitleTextWidget(
+                                        TitleSmallWidget(
                                             data: exerciseCounts.keys
                                                     .toList()[index]
                                                     .capitalizeFirst ??
@@ -174,35 +177,42 @@ class _ChartScreenState extends State<ChartScreen> {
                 ),
               ),
               SizedBox(
-                height: 20,
+                height: 13,
               ),
-              BodyMediumTextWidget(data: "thisIsStatistic"),
+              TitleLargeWidget(data: "thisIsStatistic"),
               // Text("thisIsStatistic".tr, style: Theme.of(context).textTheme.bodyMedium,),
               SizedBox(
                 height: 10,
               ),
               SizedBox(
-                height: 160,
+                height: 170,
                 child: Obx(() {
                   if (exerciseNames.isEmpty) {
-                    return TitleTextWidget(data: "noExercise");
+                    return TitleSmallWidget(data: "noExercise");
                   }
                   return ListView.builder(
                     key: Key(exerciseNames.toString()),
                     itemCount: exerciseNames.length,
                     itemBuilder: (context, index) {
-                      return ElevatedButton(
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 10.0),
+                        child: ButtonWidget(
+                          data: exerciseNames[index],
                           onPressed: () async {
                             exerciseDetail.value = exerciseNames[index];
                             await _exercisesController.fetchExercises(
-                                query: exerciseDetail.value.toLowerCase());
+                              query: exerciseDetail.value.toLowerCase(),
+                            );
                             print(exerciseDetail.value);
-                            Get.to(() => ExerciseDetailScreen(getData: 0));
+                            Get.to(
+                              () => ExerciseDetailScreen(getData: 0),
+                            );
                           },
-                          child: TitleTextWidget(data: exerciseNames[index]));
+                        ),
+                      );
                     },
                   );
-                }),
+                },),
               ),
             ],
           ),

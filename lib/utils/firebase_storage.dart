@@ -5,17 +5,23 @@ class FirestoreService {
   final CollectionReference idExercise =
       FirebaseFirestore.instance.collection("exercises");
 
-  Future<void> addExercises(
-      {required String id,
-      required String name,
-      required String bodyPart,
-      required String idUser}) {
-    return idExercise.add({
-      "id": id,
-      "name exercise": name,
-      "bodyPart": bodyPart,
-      "id user": idUser,
-    });
+  Future<void> addExercises({
+    required String id,
+    required String name,
+    required String bodyPart,
+    required String idUser,
+  }) async {
+    try {
+      await idExercise.add({
+        "id": id,
+        "name exercise": name,
+        "bodyPart": bodyPart,
+        "id user": idUser,
+      });
+      print("Exercise added successfully!");
+    } catch (e) {
+      print("Error adding exercise: $e");
+    }
   }
 
   Stream<List<FirebaseStorageModel>> getExercises(String userId) {

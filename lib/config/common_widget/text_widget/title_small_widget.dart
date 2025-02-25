@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class TitleTextWidget extends StatelessWidget {
-  TitleTextWidget({required this.data, super.key});
+class TitleSmallWidget extends StatelessWidget {
+  TitleSmallWidget({required this.data, super.key});
   String data;
 
   @override

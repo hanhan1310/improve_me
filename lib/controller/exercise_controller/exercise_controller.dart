@@ -10,7 +10,10 @@ class ExercisesController extends GetxController {
   var isLoading = false.obs;
   final FirestoreService firestoreService = FirestoreService();
   final SignUpController signUpController = SignUpController();
-
+  var isFetchingMore = false.obs;
+  var hasMore = true.obs;
+  int offset = 0;
+  final int limit = 6; // Lấy 6 bài tập mỗi lần
 
   var exerciseCounts = {
     "pectorals": 0,

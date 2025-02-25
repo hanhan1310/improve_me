@@ -20,7 +20,7 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
   late ExercisesController _exerciseController;
   final FirestoreService firestoreService = FirestoreService();
   final SignUpController signUpController = Get.put(SignUpController());
-
+  bool isButtonDisabled = false;
 
 
   @override
@@ -32,6 +32,7 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -163,7 +164,10 @@ class _ExerciseDetailState extends State<ExerciseDetailScreen> {
 
       /// button start
       floatingActionButton: ElevatedButton(
-        onPressed: () {
+        onPressed: isButtonDisabled ? null : () {
+          setState(() {
+            isButtonDisabled == true;
+          });
           firestoreService.addExercises(id: _exerciseController.exercises[widget.getData].id ?? "",name: _exerciseController.nameDetail(widget.getData) ?? "",bodyPart:  _exerciseController.targetMuscle(widget.getData) ?? "",idUser: signUpController.currentUser?.uid ?? "");
           Navigator.push(
               context,

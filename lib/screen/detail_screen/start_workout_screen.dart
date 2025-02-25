@@ -17,7 +17,7 @@ class StartWorkoutScreen extends StatefulWidget {
 }
 
 class _StartWorkoutState extends State<StartWorkoutScreen> {
-  int countdown = 3;
+  int countdown = 30;
   late ExercisesController _startExerciseController;
 
   @override

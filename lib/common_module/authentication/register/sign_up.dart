@@ -56,7 +56,7 @@ class _Screen1State extends State<Screen1> {
     return null;
   }
 
-  void submitForm() {
+  Future<void> submitForm() async {
     if (formKey.currentState!.validate()) {
       // If the form is valid, process the login
       final email = userController.text.trim();
@@ -69,18 +69,14 @@ class _Screen1State extends State<Screen1> {
         return;
       }
 
-      print('Email: $email');
-      print('Password: $password');
-      print('User name: $userName');
-      print('Question: $privacyQuestion');
-
       if(confirmPasswordController.text.trim() == passwordController.text.trim()) {
-        signUpController.createUserByEmailAndPassword(
+        await signUpController.createUserByEmailAndPassword(
             email: userController.text,
             password: passwordController.text,
         );
-
-        authenticationService.addUser(signUpController.currentUser?.uid ?? "", userName, email, password, privacyQuestion);
+        String? userID = await signUpController.currentUser?.uid ?? "";
+        await authenticationService.addUser(userID, userName, email, password, privacyQuestion);
+        print("${signUpController.currentUser?.uid}");
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(

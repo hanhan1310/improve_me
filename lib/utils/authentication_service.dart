@@ -5,7 +5,7 @@ class AuthenticationService {
   final CollectionReference usersCollection  = FirebaseFirestore.instance.collection("users");
 
   Future<void> addUser(String idUser,String userName, String email, String password, String privacyQuestion) {
-    return usersCollection.add({
+    return usersCollection.doc(idUser).set({
       "id user": idUser,
       "user name": userName,
       "email": email,

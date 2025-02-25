@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:improve_me/config/common_widget/button_widget/button_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/body_medium_text_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/body_small_text_widget.dart';
+import 'package:improve_me/config/common_widget/text_widget/title_small_widget.dart';
 import 'package:improve_me/controller/food_controller/food_controller.dart';
 import 'package:improve_me/screen/detail_screen/profile_screen.dart';
 import '../../common_module/authentication/log_in/login_screen.dart';
+import '../../config/common_widget/text_widget/title_large_widget.dart';
 import '../../config/images/image.dart';
 import '../../controller/exercise_controller/exercise_controller.dart';
 import '../detail_screen/detail_food_screen.dart';
+import '../detail_screen/setting_and_profile_screen.dart';
 import '../detail_screen/setting_screen.dart';
 import '../detail_screen/chart_screen.dart';
 import '../detail_screen/exercise_detail_screen.dart';
@@ -24,7 +30,8 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
 
   final TextEditingController searching = TextEditingController();
   final TextEditingController searchingFood = TextEditingController();
-  int currentTab = 0;
+  RxInt currentTab = 0.obs;
+  late RxString userName = "".obs;
   Timer? _debounce;
 
   @override
@@ -37,7 +44,6 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
     searchingFood;
     print("this is initstate home screen");
   }
-
 
   /// timer for searching exercises
   void _onSearchExerciseChanged() {
@@ -91,54 +97,91 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: currentTab,
-        onTap: (int newIndex) {
-          setState(() {
-            currentTab = newIndex;
-          });
-        },
-        type: BottomNavigationBarType.fixed,
-        selectedIconTheme: const IconThemeData(
-          color: Colors.blue,
-        ),
-        unselectedIconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: const Color(0xffA3EAFF),
-        fixedColor: Colors.blue,
-        items: [
-          /// home
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_filled),
-            label: "home".tr,
+      bottomNavigationBar: Obx(() {
+        return BottomNavigationBar(
+          currentIndex: currentTab.value,
+          onTap: (int newIndex) {
+            setState(() {
+              currentTab.value = newIndex;
+            });
+          },
+          type: BottomNavigationBarType.fixed,
+          selectedIconTheme: IconThemeData(
+            color: Theme.of(context).appBarTheme.iconTheme?.color,
           ),
+          unselectedIconTheme: const IconThemeData(color: Colors.black),
+          backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
+          fixedColor: Theme.of(context).appBarTheme.iconTheme?.color,
+          items: [
+            /// home
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home_filled),
+              label: "home".tr,
+            ),
 
-          /// nutrition
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood),
-            label: "nutrition".tr,
-          ),
+            /// nutrition
+            BottomNavigationBarItem(
+              icon: Icon(Icons.fastfood),
+              label: "nutrition".tr,
+            ),
 
-          /// statistic
-          BottomNavigationBarItem(
-            icon: Icon(Icons.show_chart),
-            label: "statistic".tr,
-          ),
+            /// statistic
+            BottomNavigationBarItem(
+              icon: Icon(Icons.show_chart),
+              label: "statistic".tr,
+            ),
 
-          /// setting
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: "setting".tr,
-          ),
-        ],
-      ),
+            /// setting
+            BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: "setting".tr,
+            ),
+          ],
+        );
+      }),
       body: <Widget>[
         /// Home screen
         Obx(
           () {
             if (exerciseController.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return Padding(padding: EdgeInsets.all(20.0), child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  SizedBox(
+                  height: 40,
+                  child: TextFormField(
+                    style: const TextStyle(fontSize: 12),
+                    controller: searching,
+                    onTapOutside: (even) {
+                      FocusScope.of(context).unfocus();
+                    },
+                    onChanged: (text) => _onSearchExerciseChanged(),
+                    autofocus: false,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      hintText: "searching".tr,
+                      hintStyle: TextStyle(color: Colors.black),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Colors.black, width: 1.0),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0xffA3EAFF), width: 1.0),
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                    ),
+                  ),
+                ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Expanded(child: Center( child: CircularProgressIndicator(),)),
+                ],
+              ),);
             } else {
               return Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -160,6 +203,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                           fillColor: Colors.white,
                           filled: true,
                           hintText: "searching".tr,
+                          hintStyle: TextStyle(color: Colors.black),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 1.0),
@@ -190,54 +234,49 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
-                                  width: 250,
-                                  height: 250,
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  (ExerciseDetailScreen(
-                                                    getData: index,
-                                                  ))));
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blueGrey.shade50,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            20), // Adjust radius as needed
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        /// exercises image
-                                        SizedBox(
-                                            height: 200,
-                                            width: 200,
+                                  width: 280,
+                                  height: 280,
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      (ExerciseDetailScreen(
+                                                        getData: index,
+                                                      ))));
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              Colors.blueGrey.shade50,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                20), // Adjust radius as needed
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                        ),
+                                        child: SizedBox(
+                                            height: 230,
+                                            width: 230,
                                             child: Image.network(
                                               "${exerciseController.imageExercise(index)}",
                                               fit: BoxFit.cover,
                                             )),
-
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-
-                                        /// exercises name
-                                        Flexible(
-                                          child: Text(
-                                            "${exerciseController.exercises[index].name.toString().capitalizeFirst}",
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Flexible(
+                                        child: TitleSmallWidget(
+                                            data: exerciseController
+                                                    .exercises[index].name
+                                                    .toString()
+                                                    .capitalizeFirst ??
+                                                ""),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -258,7 +297,39 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
           () {
             // Check if data is still loading
             if (foodController.isLoading.value) {
-              return const Center(child: CircularProgressIndicator());
+              return Padding(padding: EdgeInsets.only(top: 20, left: 20, right: 20), child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                    child: TextFormField(
+                      style: const TextStyle(fontSize: 12),
+                      controller: searchingFood,
+                      onTapOutside: (even) {
+                        FocusScope.of(context).unfocus();
+                      },
+                      onChanged: (text) => _onSearchNutritionChanged(),
+                      autofocus: false,
+                      decoration: InputDecoration(
+                        fillColor: Colors.white,
+                        filled: true,
+                        hintText: "searching".tr,
+                        hintStyle: TextStyle(color: Colors.black),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Colors.black, width: 1.0),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                        border: OutlineInputBorder(
+                          borderSide: const BorderSide(
+                              color: Color(0xffA3EAFF), width: 1.0),
+                          borderRadius: BorderRadius.circular(15.0),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(child: Center(child: CircularProgressIndicator(),)),
+                ],
+              ),);
             }
 
             // Check if data is loaded but empty
@@ -284,6 +355,7 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                           fillColor: Colors.white,
                           filled: true,
                           hintText: "searching".tr,
+                          hintStyle: TextStyle(color: Colors.black),
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
                                 color: Colors.black, width: 1.0),
@@ -299,76 +371,67 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
                     ),
 
                     const SizedBox(
-                      height: 10,
+                      height: 20,
                     ),
 
                     /// list of food
                     Expanded(
                       child: foodController.foodList.isEmpty
-                          ? const Center(
-                              child: Text(
-                                "Please search for keto food only",
-                                style: TextStyle(fontWeight: FontWeight.w500),
+                          ? Center(
+                              child: TitleLargeWidget(
+                                data: 'Please enter keto food only!',
                               ),
                             )
-                          : GridView.builder(
+                          : ListView.builder(
                               itemCount: foodController.foodList.length,
-                              gridDelegate:
-                                  const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      mainAxisSpacing: 10,
-                                      crossAxisSpacing: 10),
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 300,
-                                  width: 300,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10), // <-- Radius
-                                      ),
-                                      padding: EdgeInsets.zero,
-                                    ),
-                                    onPressed: () {
-                                      Get.to(() => const DetailFoodScreen(),
-                                          arguments: index);
-                                    },
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        /// food image
-                                        SizedBox(
-                                          height: 120,
-                                          width: 130,
+                                  height: 280,
+                                  width: 250,
+                                  child: Column(
+                                    children: [
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(
+                                                10), // <-- Radius
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                        ),
+                                        onPressed: () {
+                                          Get.to(() => const DetailFoodScreen(),
+                                              arguments: index);
+                                        },
+                                        child:
+
+                                            /// food image
+                                            SizedBox(
+                                          height: 220,
+                                          width: 250,
                                           child: Image.network(
                                             foodController.foodList[index].image
                                                 .toString(),
                                             fit: BoxFit.fill,
                                           ),
                                         ),
+                                      ),
 
-                                        const SizedBox(
-                                          height: 3,
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+
+                                      /// food name
+                                      SizedBox(
+                                        width: 250,
+                                        child: Center(
+                                          child: TitleSmallWidget(
+                                            data: foodController
+                                                .foodList[index].recipe
+                                                .toString(),
+                                          ),
                                         ),
-
-                                        /// food name
-                                        SizedBox(
-                                            width: 130,
-                                            child: Center(
-                                                child: Text(
-                                              foodController
-                                                  .foodList[index].recipe
-                                                  .toString(),
-                                              style: const TextStyle(
-                                                  fontSize: 11,
-                                                  color: Colors.black),
-                                            ))),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 );
                               },
@@ -385,150 +448,112 @@ class _HomeScreenExercisesState extends State<HomeScreenExercises> {
         ChartScreen(),
 
         /// setting screen
-        Padding(
-          padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                "profile".tr,
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  /// avatar
-                  CircleAvatar(
-                    backgroundImage: AssetImage(Images.avatar),
-                    minRadius: 60,
-                  ),
-                  /// name
-                  const Text("Hoang An",
-                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500)),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 20, left: 10, right: 10),
+        //   child: Column(
+        //     crossAxisAlignment: CrossAxisAlignment.center,
+        //     children: [
+        //       TitleLargeWidget(data: "profile"),
+        //       const SizedBox(
+        //         height: 10,
+        //       ),
+        //       Row(
+        //         crossAxisAlignment: CrossAxisAlignment.center,
+        //         mainAxisAlignment: MainAxisAlignment.start,
+        //         children: [
+        //           SizedBox(
+        //             width: 20,
+        //           ),
+        //
+        //           /// avatar
+        //           Icon(
+        //             Icons.account_circle,
+        //             size: 80,
+        //           ),
+        //
+        //           SizedBox(
+        //             width: 30,
+        //           ),
+        //
+        //           /// name
+        //           TitleLargeWidget(data: "Hoang An"),
+        //         ],
+        //       ),
+        //       const SizedBox(
+        //         height: 25,
+        //       ),
+        //       Expanded(
+        //         child: ListView(
+        //           physics: NeverScrollableScrollPhysics(),
+        //           children: [
+        //             Column(
+        //               children: [
+        //                 /// profile button
+        //                 SizedBox(
+        //                   height: 60,
+        //                   width: 300,
+        //                   child: ButtonWidget(
+        //                     data: "editingProfile",
+        //                     onPressed: () {
+        //                       Navigator.push(
+        //                         context,
+        //                         MaterialPageRoute(
+        //                           builder: (context) => (const ProfileScreen()),
+        //                         ),
+        //                       );
+        //                     },
+        //                   ),
+        //                 ),
+        //                 const SizedBox(
+        //                   height: 15,
+        //                 ),
+        //
+        //                 /// Setting button
+        //                 SizedBox(
+        //                   height: 60,
+        //                   width: 300,
+        //                   child: ButtonWidget(
+        //                     data: "setting",
+        //                     onPressed: () {
+        //                       Navigator.push(
+        //                         context,
+        //                         MaterialPageRoute(
+        //                           builder: (context) => (const SettingScreen()),
+        //                         ),
+        //                       );
+        //                     },
+        //                   ),
+        //                 ),
+        //                 const SizedBox(
+        //                   height: 15,
+        //                 ),
+        //
+        //                 /// log out button
+        //                 SizedBox(
+        //                     height: 60,
+        //                     width: 300,
+        //                     child: ButtonWidget(
+        //                       data: "logout",
+        //                       onPressed: () {
+        //                         Navigator.pushAndRemoveUntil(
+        //                             context,
+        //                             MaterialPageRoute(
+        //                                 builder: (context) =>
+        //                                     (const LoginScreen())),
+        //                             (route) => false);
+        //                       },
+        //                     )),
+        //               ],
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
-                ],
-              ),
-
-              const SizedBox(
-                height: 35,
-              ),
-
-              Expanded(
-                child: ListView(
-                  children: [
-                    Column(
-                      children: [
-                        /// profile button
-                        SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => (const ProfileScreen()),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.person,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "editingProfile".tr,
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-
-                        /// Setting button
-                        SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => (const SettingScreen()),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.settings,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "setting".tr,
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-
-                        /// log out button
-                        SizedBox(
-                          height: 50,
-                          width: 300,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          (const LoginScreen())),
-                                  (route) => false);
-                            },
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.logout,
-                                  color: Colors.black,
-                                ),
-                                SizedBox(
-                                  width: 15,
-                                ),
-                                Text(
-                                  "logout".tr,
-                                  style: TextStyle(color: Colors.black),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ][currentTab],
+        SettingAndProfileScreen(),
+      ][currentTab.value],
     );
   }
 }
