@@ -19,6 +19,7 @@ class StartWorkoutScreen extends StatefulWidget {
 class _StartWorkoutState extends State<StartWorkoutScreen> {
   int countdown = 30;
   late ExercisesController _startExerciseController;
+  bool isPressed = false;
 
   @override
   void initState() {
@@ -30,6 +31,7 @@ class _StartWorkoutState extends State<StartWorkoutScreen> {
     Timer.periodic(const Duration(seconds: 1), (timer) {
       if (countdown > 0) {
         setState(() {
+          isPressed = true;
           countdown--;
         });
       } else {
@@ -62,7 +64,7 @@ class _StartWorkoutState extends State<StartWorkoutScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xffA3EAFF),
                 ),
-                onPressed: counting,
+                onPressed: isPressed == true ? null : counting,
                 child: Text(
                   countdown == 0 ? "done".tr : "start".tr,
                   style: const TextStyle(fontSize: 20, color: Colors.black),

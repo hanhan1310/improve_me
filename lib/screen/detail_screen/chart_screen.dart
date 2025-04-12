@@ -200,13 +200,23 @@ class _ChartScreenState extends State<ChartScreen> {
                           data: exerciseNames[index],
                           onPressed: () async {
                             exerciseDetail.value = exerciseNames[index];
-                            await _exercisesController.fetchExercises(
-                              query: exerciseDetail.value.toLowerCase(),
-                            );
-                            print(exerciseDetail.value);
+                            if(exerciseDetail.value.toLowerCase() == "3/4 sit-up"){
+                              await _exercisesController.fetchExercises(
+                                query: "",
+                              );
+                              print(exerciseDetail.value);
+                            }
+                            else {
+                              await _exercisesController.fetchExercises(
+                                query: exerciseDetail.value.toLowerCase(),
+                              );
+                              print(exerciseDetail.value);
+                            }
                             Get.to(
                               () => ExerciseDetailScreen(getData: 0),
-                            );
+                            )?.then((_) {
+                              _exercisesController.fetchExercises(query: "");
+                            });
                           },
                         ),
                       );

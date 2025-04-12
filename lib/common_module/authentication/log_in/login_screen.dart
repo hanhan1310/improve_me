@@ -61,6 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
             .get();
 
         if (userSnapshot.docs.isEmpty) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Color(0xffA3EAFF),
+            content: Center(child: Text("Email doesn't exist", style: TextStyle(color: Colors.black),)),
+          ));
           print("No user found with this email.");
           return;
         }
@@ -83,6 +87,10 @@ class _LoginScreenState extends State<LoginScreen> {
         }
 
         else{
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: Color(0xffA3EAFF),
+            content: Center(child: Text("Incorrect Password", style: TextStyle(color: Colors.black))),
+          ));
           print("incorrect password");
           print(password);
           return;
